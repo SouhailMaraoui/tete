@@ -1,2 +1,3 @@
 Why am I always second ?
-This change is done in branch Lab2-2
+This change is done in branch Lab2-2.
+This modification is done in branch Lab2 after the creation of Lab2-3.
