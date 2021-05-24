@@ -5,3 +5,6 @@ Now I'm being modified in branch Lab2-3.
 This is a modification in branch Lab2-4. 
 This is a modification in branch Lab2.
 
+This is the first modification in Lab2-5.
+This is the second modification.
+This is the third modification.
