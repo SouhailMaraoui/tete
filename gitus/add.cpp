@@ -10,7 +10,7 @@ void cmd_add(const std::string& filePath)
     std::string fileContent=readFile(filePath);
     std::string sha=getSHA1(fileContent);
 
-    if(isInIndex(sha))
+    if(isInIndex(sha,filePath))
     {
         println("The file is in the staging area already and was not modified.");
     }

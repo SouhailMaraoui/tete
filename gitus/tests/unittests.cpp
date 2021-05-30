@@ -84,8 +84,8 @@ TEST_CASE("gitus add")
 	REQUIRE_NOTHROW(cmd_add(testFile2));
 
 	//Check if the files were added to index
-	REQUIRE(isInIndex(file1V1SHA)==true);
-	REQUIRE(isInIndex(file2V1SHA)==true);
+	REQUIRE(isInIndex(file1V1SHA,testFile1)==true);
+	REQUIRE(isInIndex(file2V1SHA,testFile2)==true);
 
 	//Check if the object of file was created and contains the original text content. 
 	REQUIRE(getContentOfFileObject(file1V1SHA)==testFile1ContentV1);
@@ -97,8 +97,8 @@ TEST_CASE("gitus commit")
 	REQUIRE_NOTHROW(cmd_commit("COMMIT_1","mars3319"));
 
 	//Check if the files were remove from index
-	REQUIRE(isInIndex(file1V1SHA)==false);
-	REQUIRE(isInIndex(file2V1SHA)==false);
+	REQUIRE(isInIndex(file1V1SHA,testFile1)==false);
+	REQUIRE(isInIndex(file2V1SHA,testFile2)==false);
 
 	//Check if commit object was created
 	REQUIRE_NOTHROW(readFile(objectPathOfHash(readFile(".git/HEAD"))));

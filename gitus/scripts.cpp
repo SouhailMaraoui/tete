@@ -3,16 +3,17 @@ void println(const std::string& text)
     std::cout<<text<<std::endl;
 }
 
-bool isInIndex(const std::string& sha)
+bool isInIndex(const std::string& sha,const std::string& name )
 {
     bool ret=false;
     std::ifstream index(".git/index");
     std::string path,hash;
-    while(index>>hash>>path)
+    while(index>>hash>>boost::io::quoted(path))
     {
-        if(hash==sha)
+        if(hash==sha && name==path)
             ret=true;
     }
+    
     return ret;
 }
 

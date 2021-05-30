@@ -19,7 +19,6 @@ std::string getParentCommit(std::string commitHash)
     {
         if(type=="tree") continue;
         else if(type=="parent") ret=hash;
-        else if(type=="time") continue;
         else if (type=="message") println("\t"+hash+"\n");
     }
     return ret;

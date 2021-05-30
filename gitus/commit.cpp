@@ -18,8 +18,10 @@ std::string recursiveObjectCreate(std::string currentPath)
 
     if(boost::filesystem::is_regular_file(currentPath))
     {
+        auto rootPath = boost::filesystem::current_path();
+        auto relativePath = boost::filesystem::relative(boost::filesystem::path(currentPath),rootPath).string();
         std::string sha1=getSHA1(readFile(currentPath));
-        if(isInIndex(sha1))
+        if(isInIndex(sha1,relativePath))
         {
             println("-----"+currentPath);
             return "blob "+sha1+" "+path.filename().string()+"\n";
@@ -34,14 +36,13 @@ std::string recursiveObjectCreate(std::string currentPath)
             outputFile+= recursiveObjectCreate(entry.path().string());
         }
 
-        if(outputFile.length()>0)
+        if( outputFile.length()>0)
         {
             std::string treeSHA1=getSHA1(outputFile);
             std::string treePath = createObject(treeSHA1,outputFile,true);
-
+    
             return "tree "+treeSHA1+" "+path.filename().string()+"\n";
         }
-        return "";
     }
     return "";
 }
