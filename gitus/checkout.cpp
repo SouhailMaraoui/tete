@@ -46,8 +46,12 @@ void recursiveCheckoutForFiles(std::string treeHash,std::string subFolder,bool f
 
 
 /*
-Once we checkout a commit that is different than the one in head we create a file .lock,
-so that we lock the user from commiting, the check if the file existe is in cmd_commit().
+We first get a vector of all the commits hashes, then we find the index of target checkout,
+if we found it, we check .lock file to see if we are currently checking out another commit,
+    if not we create the file and we revere all the commit from the one in HEAD to found index.
+    else if index>0 we read the .lock fil and determine whether we should go back or forward,
+    else, and since .lock dont exist and index=0; we let the user know that he is already in HEAD.
+if not found we send back an error message.
 */
 void cmd_checkout(std::string commitHash)
 {
@@ -127,33 +131,4 @@ void cmd_checkout(std::string commitHash)
     {
         println("Please type a valid commit hash. You can copy a hash from './gitus log' and paste it.");
     }
-    
-
-
-    // std::string commitObjectPath=readFile(objectPathOfHash(commitHash));
-    // if(!commitObjectPath.empty())
-    // {
-    //     if(commitHash==readFile(".git/HEAD"))
-    //     {
-    //         if (boost::filesystem::exists(".lock"))
-    //             boost::filesystem::remove(".lock");
-    //     }
-    //     else
-    //     {
-    //         createFile(".lock");
-    //         std::istringstream stream(readFile(objectPathOfHash(commitHash)));
-    //         std::string type,hash;
-    //         std::string treeHash;
-
-    //         while(stream>>type>>hash){
-    //             if(type=="tree") treeHash=hash;
-    //         }
-
-    //         recursiveCheckoutForFiles(treeHash,"");
-    //     }   
-    // }
-    // else
-    // {
-    //     println("Please type a valid commit hash. You can copy a hash from './gitus log' and paste it.");
-    // }
 }
