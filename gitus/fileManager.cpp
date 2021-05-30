@@ -22,10 +22,18 @@ int  removeFolder(const std::string& foldername)
     return -1;
 }
 
-void createFile(const std::string& filename)
+int createFile(const std::string& filename)
 {
-    std::ofstream file(filename);
-    file.close();
+    auto path = boost::filesystem::current_path();
+    const auto filepath = path.append(filename);
+    if (!boost::filesystem::exists(filepath))
+	{
+        std::ofstream file(filename);
+        file.close();
+        return 0;
+    }
+    return -1;
+    
 }
 
 std::string readFile(const std::string& filename)

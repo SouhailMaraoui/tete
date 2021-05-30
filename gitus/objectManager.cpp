@@ -10,3 +10,22 @@ std::string createObject(const std::string& sha,const std::string& content,const
 {
     return writeInFile(createObject(sha),content,overwrite);
 }
+
+
+/*
+Return the third element onward in the file object, which consequently, returns the file contents.
+*/
+std::string getContentOfFileObject(std::string hash)
+{
+    std::ifstream fileObject(objectPathOfHash(hash));
+    std::string line;
+
+    std::string fileContent;
+    int elmenetIndex=0;
+    while(fileObject>>boost::io::quoted(line)){
+        if(elmenetIndex<2) elmenetIndex++;
+        else fileContent+=line;
+    }
+
+    return fileContent;
+}

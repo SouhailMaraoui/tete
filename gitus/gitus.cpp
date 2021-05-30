@@ -71,7 +71,12 @@ int main(int argc, char * argv[])
             } 
 
             else if(argv1=="checkout")
-            {}
+            {
+                if(argc>2)
+                    cmd_checkout(std::string(argv[2]));
+                else 
+                    println("You need to type one commit hash.");
+            }
             
             else if(argv1=="--help" || argv1=="-h")
                 cmd_help();

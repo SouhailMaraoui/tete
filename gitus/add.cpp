@@ -16,7 +16,7 @@ void cmd_add(const std::string& filePath)
     }
     else
     {
-        std::string objectContent="\""+fileContent+"\"\n"+filePath+"\n"+getFileSize(filePath);
+        std::string objectContent="\""+filePath+"\" "+getFileSize(filePath)+"\n\""+fileContent+"\"";
         createObject(sha,objectContent,true);
         writeInFile(".git/index",sha+" \""+filePath+"\" ",false);
     }

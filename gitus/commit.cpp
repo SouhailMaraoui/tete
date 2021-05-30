@@ -68,18 +68,25 @@ void createCommitObject(const std::string& commitObjectContent,const std::string
 
 void cmd_commit(const std::string& message,const std::string& author)
 {
-    auto path = boost::filesystem::current_path();
-    std::string root=recursiveObjectCreate(path.string());
-
-    //root return ("tree" + hash + root_folder_name),
-    //the following code just construct a the content of commit object without the folder name.
-    std::istringstream stream(root);
-    std::string type,hash,folder;
-    std::string commitObjectContent;
-    while(stream>>type>>hash>>folder){
-        commitObjectContent=type+" "+hash+"\n"; 
+    if (boost::filesystem::exists(".lock"))
+    {
+        println("You can't commit as you are curretly checking out a different commit than the one in HEAD.");
     }
+    else
+    {
+        auto path = boost::filesystem::current_path();
+        std::string root=recursiveObjectCreate(path.string());
 
-    createCommitObject(commitObjectContent,message,author);
-    writeInFile(".git/index","",true);
+        //root return ("tree" + hash + root_folder_name),
+        //the following code just construct a the content of commit object without the folder name.
+        std::istringstream stream(root);
+        std::string type,hash,folder;
+        std::string commitObjectContent;
+        while(stream>>type>>hash>>folder){
+            commitObjectContent=type+" "+hash+"\n"; 
+        }
+
+        createCommitObject(commitObjectContent,message,author);
+        writeInFile(".git/index","",true);
+    }  
 }
