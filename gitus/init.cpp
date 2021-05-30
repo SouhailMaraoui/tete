@@ -15,10 +15,14 @@ void cmd_init()
     }
     else
     {
-        println("This directory is already a git repository, reinitializing...");
-        removeFolder(".git");
-        cmd_init();
-        
+        println("This directory is already a git repository, would you like to reinitialize it ? (y/n)");
+        std::string response;
+        std::cin>> response;
+        if(response=="y")
+        {
+            removeFolder(".git");
+            cmd_init();
+        }
     }
         
 }

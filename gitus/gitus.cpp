@@ -11,6 +11,8 @@
 #include <boost/uuid/detail/sha1.hpp>
 
 #include "scripts.cpp"
+#include "fileManager.cpp"
+#include "objectManager.cpp"
 
 #include "init.cpp"
 #include "add.cpp"
@@ -49,8 +51,7 @@ int main(int argc, char * argv[])
             std::string argv1 = argv[1];
             if(argv1=="init") cmd_init();
             
-            else if(argv1=="add")
-            {}
+            else if(argv1=="add") cmd_add(std::string(argv[2]));
             
             else if(argv1=="commit")
             {}
