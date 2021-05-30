@@ -80,8 +80,9 @@ TEST_CASE("gitus add")
 	REQUIRE(writeInFile(testFile1,testFile1ContentV1,true)==testFile1);
 	REQUIRE(writeInFile(testFile2,testFile2ContentV1,true)==testFile2);
 
-	REQUIRE_NOTHROW(cmd_add(testFile1));
-	REQUIRE_NOTHROW(cmd_add(testFile2));
+	REQUIRE(cmd_add(testFile1)==0);
+	REQUIRE(cmd_add(testFile2)==0);
+	REQUIRE(cmd_add("I_DONT_EXIST.FILE")==-1);
 
 	//Check if the files were added to index
 	REQUIRE(isInIndex(file1V1SHA,testFile1)==true);
@@ -94,7 +95,7 @@ TEST_CASE("gitus add")
 
 TEST_CASE("gitus commit") 
 {
-	REQUIRE_NOTHROW(cmd_commit("COMMIT_1","mars3319"));
+	REQUIRE(cmd_commit("COMMIT_1","mars3319")==0);println("");
 
 	//Check if the files were remove from index
 	REQUIRE(isInIndex(file1V1SHA,testFile1)==false);
@@ -111,12 +112,12 @@ TEST_CASE("gitus checkout")
 	//We change the content of the file1 to V2 and commit
 	writeInFile(testFile1,testFile1ContentV2,true);
 	cmd_add(testFile1);
-	cmd_commit("COMMIT_2","mars3319");
+	cmd_commit("COMMIT_2","mars3319");println("");
 
 	//We change the content of the file2 to V2 and commit
 	writeInFile(testFile2,testFile2ContentV2,true);
 	cmd_add(testFile2);
-	cmd_commit("COMMIT_3","mars3319");
+	cmd_commit("COMMIT_3","mars3319");println("");
 
 	std::string newCommitHash=readFile(".git/HEAD");
 
@@ -125,15 +126,15 @@ TEST_CASE("gitus checkout")
 	REQUIRE(readFile(testFile2)==testFile2ContentV2);
 
 	//Checkout to the old commit and check if both file contents are in V1
-	REQUIRE_NOTHROW(cmd_checkout(oldCommitHash));
+	REQUIRE_NOTHROW(cmd_checkout(oldCommitHash));println("");
 	REQUIRE(readFile(testFile1)==testFile1ContentV1);
 	REQUIRE(readFile(testFile2)==testFile2ContentV1);
 
 	//Make sure we can't commit while on checkout
-	REQUIRE(cmd_commit("MESSAGE_TEXT_V2","AUTHOR_NAME")==-1);
+	REQUIRE(cmd_commit("MESSAGE_TEXT_V2","AUTHOR_NAME")==-1);println("");
 
 	//Come back to the latest commit and check if the file content are in V2
-	REQUIRE_NOTHROW(cmd_checkout(newCommitHash));
+	REQUIRE_NOTHROW(cmd_checkout(newCommitHash));println("");
 	REQUIRE(readFile(testFile1)==testFile1ContentV2);
 	REQUIRE(readFile(testFile2)==testFile2ContentV2);
 }

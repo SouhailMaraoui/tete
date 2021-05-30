@@ -26,5 +26,4 @@ int cmd_init()
         }
         return -1;
     }
-        
 }

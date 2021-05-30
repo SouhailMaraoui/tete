@@ -70,6 +70,11 @@ void createCommitObject(const std::string& commitObjectContent,const std::string
 
 int cmd_commit(const std::string& message,const std::string& author)
 {
+    if(!boost::filesystem::exists(".git"))
+    {
+        println("This is not a gitus repository.");
+        return -1;
+    }
     if (boost::filesystem::exists(".lock"))
     {
         println("You can't commit as you are curretly checking out a different commit than the one in HEAD.");
@@ -77,6 +82,7 @@ int cmd_commit(const std::string& message,const std::string& author)
     }
     else
     {
+        println("Commit ==> "+message);
         auto path = boost::filesystem::current_path();
         std::string root=recursiveObjectCreate(path.string());
 

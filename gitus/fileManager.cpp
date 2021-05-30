@@ -38,9 +38,11 @@ int createFile(const std::string& filename)
 
 std::string readFile(const std::string& filename)
 {
-    std::ifstream file(filename);
-    if(file.is_open())
+    
+    try
     {
+        std::ifstream file(filename);
+        file.is_open();
         std::stringstream content;
         content <<file.rdbuf();
         std::string ret=content.str();
@@ -51,7 +53,7 @@ std::string readFile(const std::string& filename)
         
         return ret;
     }
-    else
+    catch(std::ios_base::failure& e)
     {
         println("Could not read from file "+filename);
         return nullptr;

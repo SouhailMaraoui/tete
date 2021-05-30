@@ -36,7 +36,7 @@ void recursiveCheckoutForFiles(std::string treeHash,std::string subFolder,bool f
     {
         if(type=="blob")
         {
-            println("Changed file "+subFolder+name);
+            println("\tChanged file: "+subFolder+name);
             createFile(subFolder+name);
             writeInFile(subFolder+name,getContentOfFileObject(hash),true);
         }
@@ -57,9 +57,15 @@ if we found it, we check .lock file to see if we are currently checking out anot
     else, and since .lock dont exist and index=0; we let the user know that he is already in HEAD.
 if not found we send back an error message.
 */
-void cmd_checkout(std::string commitHash)
+int  cmd_checkout(std::string commitHash)
 {
 
+    println("Checkout => "+commitHash);
+    if(!boost::filesystem::exists(".git"))
+    {
+        println("This is not a gitus repository.");
+        return -1;
+    }
     std::vector<std::string> commitsHashesArray = getListOfCommitsHashes();
 
     bool found =false;
@@ -89,7 +95,7 @@ void cmd_checkout(std::string commitHash)
                 int recursionIndex=1;
                 while(recursionIndex<=hashIndex)
                 {
-                    println("===> Checking out "+commitsHashesArray[recursionIndex]);
+                    println("\t>"+commitsHashesArray[recursionIndex]);
                     recursiveCheckoutForFiles(commitsHashesArray[recursionIndex],"",true);
                         recursionIndex++;
                 }
@@ -110,7 +116,7 @@ void cmd_checkout(std::string commitHash)
                 int recursionIndex=prevCheckoutIndex+1;
                 while(recursionIndex<=hashIndex)
                 {
-                    println("===> Checking out "+commitsHashesArray[recursionIndex]);
+                    println("\t>"+commitsHashesArray[recursionIndex]);
                     recursiveCheckoutForFiles(commitsHashesArray[recursionIndex],"",true);
                     recursionIndex++;
                 }
@@ -120,7 +126,7 @@ void cmd_checkout(std::string commitHash)
                 int recursionIndex=prevCheckoutIndex-1;
                 while(recursionIndex>=hashIndex)
                 {
-                    println("===> Checking out "+commitsHashesArray[recursionIndex]);
+                    println("\t>"+commitsHashesArray[recursionIndex]);
                     recursiveCheckoutForFiles(commitsHashesArray[recursionIndex],"",true);
                     recursionIndex--;
                 }
@@ -139,4 +145,5 @@ void cmd_checkout(std::string commitHash)
     {
         println("Please type a valid commit hash. You can copy a hash from './gitus log' and paste it.");
     }
+    return 0;
 }

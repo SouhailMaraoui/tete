@@ -24,8 +24,13 @@ std::string getParentCommit(std::string commitHash)
     return ret;
 }
 
-void cmd_log()
+int cmd_log()
 {
+    if(!boost::filesystem::exists(".git"))
+    {
+        println("This is not a gitus repository.");
+        return -1;
+    }
     std::string currentCommitHash=readFile(".git/HEAD");
     println("> "+currentCommitHash);
     std::string hash=getParentCommit(currentCommitHash);
@@ -34,4 +39,5 @@ void cmd_log()
         println("> "+hash);
         hash=getParentCommit(hash);
     }
+    return 0;
 }
