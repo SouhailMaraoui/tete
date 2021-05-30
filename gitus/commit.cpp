@@ -59,7 +59,7 @@ void createCommitObject(const std::string& commitObjectContent,const std::string
     if(head.length()>0)
         content+="parent "+head;
     
-    content+="\ntime "+getCurrentDateTime()+"\n";
+    content+="\ntime \""+getCurrentDateTime()+"\"\n";
     content+="\nmessage \""+message+"\" \nauthor \""+author+"\"\n";
     createObject(sha1,content,true); 
 
