@@ -1,11 +1,12 @@
 std::string createObject(const std::string& sha)
 {
-    std::string newObject=sha.substr(0,2)+"/"+sha.substr(2,sha.length());
+    std::string newObjectPath=objectPathOfHash(sha);
     createFolder(".git/objects/"+sha.substr(0,2));
-    createFile(".git/objects/"+newObject);
+    createFile(newObjectPath);
 
-    return ".git/objects/"+newObject;
+    return newObjectPath;
 }
-std::string createObject(const std::string& sha,const std::string& content,const bool overwrite){
+std::string createObject(const std::string& sha,const std::string& content,const bool overwrite)
+{
     return writeInFile(createObject(sha),content,overwrite);
 }

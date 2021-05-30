@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <ctime>
 
 #include <boost/filesystem.hpp>
 #include <boost/iostreams/copy.hpp>
@@ -50,6 +51,8 @@ int main(int argc, char * argv[])
         {
             std::string argv1 = argv[1];
             if(argv1=="init") cmd_init();
+
+            else if(argv1=="log") cmd_log();
             
             else if(argv1=="add")
             {
@@ -66,12 +69,7 @@ int main(int argc, char * argv[])
                 else 
                     println("You need to enter a message and the author, see 'gitus commit --help'.");
             } 
-            
-            else if(argv1=="log")
-            {
-                
-            }
-            
+
             else if(argv1=="checkout")
             {}
             

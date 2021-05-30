@@ -59,6 +59,7 @@ void createCommitObject(const std::string& commitObjectContent,const std::string
     if(head.length()>0)
         content+="parent "+head;
     
+    content+="\ntime "+getCurrentDateTime()+"\n";
     content+="\nmessage \""+message+"\" \nauthor \""+author+"\"\n";
     createObject(sha1,content,true); 
 
@@ -72,10 +73,10 @@ void cmd_commit(const std::string& message,const std::string& author)
 
     //root return ("tree" + hash + root_folder_name),
     //the following code just construct a the content of commit object without the folder name.
-    std::istringstream iss(root);
+    std::istringstream stream(root);
     std::string type,hash,folder;
     std::string commitObjectContent;
-    while(iss>>type>>hash>>folder){
+    while(stream>>type>>hash>>folder){
         commitObjectContent=type+" "+hash+"\n"; 
     }
 
