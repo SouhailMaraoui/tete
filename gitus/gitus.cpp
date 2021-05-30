@@ -51,13 +51,26 @@ int main(int argc, char * argv[])
             std::string argv1 = argv[1];
             if(argv1=="init") cmd_init();
             
-            else if(argv1=="add") cmd_add(std::string(argv[2]));
+            else if(argv1=="add")
+            {
+                if(argc>2)
+                    cmd_add(std::string(argv[2]));
+                else 
+                    println("You need to select one file to add.");
+            }
             
             else if(argv1=="commit")
-            {}
+            {
+                if(argc>3)
+                    cmd_commit(std::string(argv[2]),std::string(argv[3]));
+                else 
+                    println("You need to enter a message and the author, see 'gitus commit --help'.");
+            } 
             
             else if(argv1=="log")
-            {}
+            {
+                
+            }
             
             else if(argv1=="checkout")
             {}
