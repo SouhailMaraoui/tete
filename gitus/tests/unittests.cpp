@@ -141,6 +141,8 @@ TEST_CASE("gitus checkout")
 
 TEST_CASE("gitus log") 
 {
+	println("----------------------------");
+	println("HISTORY LOGS ::");
 	REQUIRE(cmd_log()==0);
 	REQUIRE(removeFolder(".git")==0);
 }
