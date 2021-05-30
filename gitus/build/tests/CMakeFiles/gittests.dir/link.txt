@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/gittests.dir/unittests.cpp.o -o gittests  ../git/libgit.a /home/mars3319/Downloads/boost_1_75_0/stage/lib/libboost_iostreams.a /home/mars3319/Downloads/boost_1_75_0/stage/lib/libboost_filesystem.a /home/mars3319/Downloads/boost_1_75_0/stage/lib/libboost_regex.a /usr/lib/x86_64-linux-gnu/libz.so 

@@ -1,0 +1,9 @@
+/home/mars3319/project/tp1/eq30/gitus/build/CMakeFiles/rebuild_cache.dir
+/home/mars3319/project/tp1/eq30/gitus/build/CMakeFiles/edit_cache.dir
+/home/mars3319/project/tp1/eq30/gitus/build/CMakeFiles/gitus.dir
+/home/mars3319/project/tp1/eq30/gitus/build/git/CMakeFiles/edit_cache.dir
+/home/mars3319/project/tp1/eq30/gitus/build/git/CMakeFiles/rebuild_cache.dir
+/home/mars3319/project/tp1/eq30/gitus/build/git/CMakeFiles/git.dir
+/home/mars3319/project/tp1/eq30/gitus/build/tests/CMakeFiles/rebuild_cache.dir
+/home/mars3319/project/tp1/eq30/gitus/build/tests/CMakeFiles/edit_cache.dir
+/home/mars3319/project/tp1/eq30/gitus/build/tests/CMakeFiles/gittests.dir

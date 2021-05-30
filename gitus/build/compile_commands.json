@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/mars3319/project/tp1/eq30/gitus/build",
+  "command": "/usr/bin/c++  -I/home/mars3319/project/tp1/eq30/gitus/git -I/home/mars3319/Downloads/boost_1_75_0 -g -o CMakeFiles/gitus.dir/gitus.cpp.o -c /home/mars3319/project/tp1/eq30/gitus/gitus.cpp",
+  "file": "/home/mars3319/project/tp1/eq30/gitus/gitus.cpp"
+},
+{
+  "directory": "/home/mars3319/project/tp1/eq30/gitus/build/git",
+  "command": "/usr/bin/c++  -I/home/mars3319/project/tp1/eq30/gitus/git -I/home/mars3319/Downloads/boost_1_75_0 -g -o CMakeFiles/git.dir/dummy.cpp.o -c /home/mars3319/project/tp1/eq30/gitus/git/dummy.cpp",
+  "file": "/home/mars3319/project/tp1/eq30/gitus/git/dummy.cpp"
+},
+{
+  "directory": "/home/mars3319/project/tp1/eq30/gitus/build/tests",
+  "command": "/usr/bin/c++  -I/home/mars3319/project/tp1/eq30/gitus/tests/git -I/home/mars3319/project/tp1/eq30/gitus/git -I/home/mars3319/Downloads/boost_1_75_0 -g -o CMakeFiles/gittests.dir/unittests.cpp.o -c /home/mars3319/project/tp1/eq30/gitus/tests/unittests.cpp",
+  "file": "/home/mars3319/project/tp1/eq30/gitus/tests/unittests.cpp"
+}
+]
