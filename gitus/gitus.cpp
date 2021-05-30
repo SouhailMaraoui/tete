@@ -1,4 +1,15 @@
+#include <fstream>
 #include <iostream>
+#include <sstream>
+#include <string>
+
+#include <boost/filesystem.hpp>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/filter/zlib.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/uuid/detail/sha1.hpp>
+
 #include "scripts.cpp"
 
 #include "init.cpp"
@@ -36,10 +47,7 @@ int main(int argc, char * argv[])
         else if(argc>1)
         {
             std::string argv1 = argv[1];
-            if(argv1=="init")
-            {
-
-            }
+            if(argv1=="init") cmd_init();
             
             else if(argv1=="add")
             {}
