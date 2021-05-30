@@ -49,7 +49,8 @@ std::string recursiveObjectCreate(std::string currentPath)
 /*
 Create a commit object and point HEAD to it
 */
-void createCommitObject(const std::string& commitObjectContent,const std::string& message,const std::string& author){
+void createCommitObject(const std::string& commitObjectContent,const std::string& message,const std::string& author)
+{
     std::string sha1=getSHA1(commitObjectContent);
     std::string content=commitObjectContent;
 
@@ -83,7 +84,8 @@ int cmd_commit(const std::string& message,const std::string& author)
         std::istringstream stream(root);
         std::string type,hash,folder;
         std::string commitObjectContent;
-        while(stream>>type>>hash>>folder){
+        while(stream>>type>>hash>>folder)
+        {
             commitObjectContent=type+" "+hash+"\n"; 
         }
 

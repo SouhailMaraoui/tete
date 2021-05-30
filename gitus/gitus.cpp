@@ -33,9 +33,6 @@ void cmd_help()
     cmd_checkout_help();
 }
 
-
-
-
 int main(int argc, char * argv[])
 {
 
@@ -89,8 +86,4 @@ int main(int argc, char * argv[])
             cmd_help();
 
     return 0;
-}
-
-int uwu(){
-    return 3;
 }

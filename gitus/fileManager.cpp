@@ -58,7 +58,8 @@ std::string readFile(const std::string& filename)
     }
 }
 
-std::string writeInFile(const std::string& filename, const std::string& content,bool overwrite){
+std::string writeInFile(const std::string& filename, const std::string& content,bool overwrite)
+{
     std::fstream file;
     if(overwrite)
         file.open(filename,std::ios::out);

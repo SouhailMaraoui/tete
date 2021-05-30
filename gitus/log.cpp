@@ -30,7 +30,8 @@ void cmd_log()
     std::string currentCommitHash=readFile(".git/HEAD");
     println("> "+currentCommitHash);
     std::string hash=getParentCommit(currentCommitHash);
-    while(hash!=""){
+    while(hash!="")
+    {
         println("> "+hash);
         hash=getParentCommit(hash);
     }

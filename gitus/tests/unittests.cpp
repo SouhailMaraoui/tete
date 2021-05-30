@@ -30,14 +30,26 @@
 
 /*
 The test cases are assumed to be run sequentially, hence why "gitus commit" 
-commit the test file from the test case "gitus add".
+commit the test files from the test case "gitus add".
 */
 
-std::string testFile=".test_file";
-std::string testFileContentV1="TEXT_HERE";
-std::string testFileContentV2="ANOTER_TEXT_HERE";
-std::string contentV1SHA=getSHA1(testFileContentV1);
-std::string contentV2SHA=getSHA1(testFileContentV2);
+
+//This is file 1 in root folder
+std::string testFile1="1.test_file";
+std::string testFile1ContentV1="THIS IS TEST FILE 1";
+std::string testFile1ContentV2="THIS IS VERSION 2 OF FILE 1";
+std::string file1V1SHA=getSHA1(testFile1ContentV1);
+std::string file1V2SHA=getSHA1(testFile1ContentV2);
+
+/*
+This is file 2 in nested folder f1/f2/, reason being to check if both
+recursive commit and checkout are working even with files in subfolders.
+*/
+std::string testFile2="f1/f2/2.test_file";
+std::string testFile2ContentV1="THIS IS TEST FILE 2";
+std::string testFile2ContentV2="THIS IS VERSION 2 OF FILE 2";
+std::string file2V1SHA=getSHA1(testFile2ContentV1);
+std::string file2V2SHA=getSHA1(testFile2ContentV2);
 
 TEST_CASE("gitus init") 
 {
@@ -59,24 +71,34 @@ TEST_CASE("gitus init")
 
 TEST_CASE("gitus add") 
 {
-	
-	REQUIRE((createFile(testFile)==0 || createFile(testFile)==-1));
-	REQUIRE(writeInFile(testFile,testFileContentV1,true)==testFile);
-	REQUIRE_NOTHROW(cmd_add(testFile));
+	createFolder("f1");
+	createFolder("f1/f2");
 
-	//Check if file was added to index
-	REQUIRE(isInIndex(contentV1SHA)==true);
+	REQUIRE((createFile(testFile1)==0 || createFile(testFile1)==-1));
+	REQUIRE((createFile(testFile2)==0 || createFile(testFile2)==-1));
+
+	REQUIRE(writeInFile(testFile1,testFile1ContentV1,true)==testFile1);
+	REQUIRE(writeInFile(testFile2,testFile2ContentV1,true)==testFile2);
+
+	REQUIRE_NOTHROW(cmd_add(testFile1));
+	REQUIRE_NOTHROW(cmd_add(testFile2));
+
+	//Check if the files were added to index
+	REQUIRE(isInIndex(file1V1SHA)==true);
+	REQUIRE(isInIndex(file2V1SHA)==true);
 
 	//Check if the object of file was created and contains the original text content. 
-	REQUIRE(getContentOfFileObject(contentV1SHA)==testFileContentV1);
+	REQUIRE(getContentOfFileObject(file1V1SHA)==testFile1ContentV1);
+	REQUIRE(getContentOfFileObject(file2V1SHA)==testFile2ContentV1);
 }
 
 TEST_CASE("gitus commit") 
 {
-	REQUIRE_NOTHROW(cmd_commit("MESSAGE_TEXT","AUTHOR_NAME"));
+	REQUIRE_NOTHROW(cmd_commit("COMMIT_1","mars3319"));
 
-	//Check if file was remove from index
-	REQUIRE(isInIndex(contentV1SHA)==false);
+	//Check if the files were remove from index
+	REQUIRE(isInIndex(file1V1SHA)==false);
+	REQUIRE(isInIndex(file2V1SHA)==false);
 
 	//Check if commit object was created
 	REQUIRE_NOTHROW(readFile(objectPathOfHash(readFile(".git/HEAD"))));
@@ -86,24 +108,32 @@ TEST_CASE("gitus checkout")
 {
 	std::string oldCommitHash=readFile(".git/HEAD");
 
-	//We change the content of the file to V2 and commit
-	writeInFile(testFile,testFileContentV2,true);
-	cmd_add(testFile);
-	cmd_commit("MESSAGE_TEXT_V2","AUTHOR_NAME");
+	//We change the content of the file1 to V2 and commit
+	writeInFile(testFile1,testFile1ContentV2,true);
+	cmd_add(testFile1);
+	cmd_commit("COMMIT_2","mars3319");
+
+	//We change the content of the file2 to V2 and commit
+	writeInFile(testFile2,testFile2ContentV2,true);
+	cmd_add(testFile2);
+	cmd_commit("COMMIT_3","mars3319");
 
 	std::string newCommitHash=readFile(".git/HEAD");
 
-	//Make sure that the content of the file now is in V2
-	REQUIRE(readFile(testFile)==testFileContentV2);
+	//Make sure that the content of the file 1 and 2 now is in V2
+	REQUIRE(readFile(testFile1)==testFile1ContentV2);
+	REQUIRE(readFile(testFile2)==testFile2ContentV2);
 
-	//Checkout to the old commit and check if the file content are V1
+	//Checkout to the old commit and check if both file contents are in V1
 	REQUIRE_NOTHROW(cmd_checkout(oldCommitHash));
-	REQUIRE(readFile(testFile)==testFileContentV1);
+	REQUIRE(readFile(testFile1)==testFile1ContentV1);
+	REQUIRE(readFile(testFile2)==testFile2ContentV1);
 
 	//Make sure we can't commit while on checkout
 	REQUIRE(cmd_commit("MESSAGE_TEXT_V2","AUTHOR_NAME")==-1);
 
-	//Come back to the latest commit and check if the file content are V2
+	//Come back to the latest commit and check if the file content are in V2
 	REQUIRE_NOTHROW(cmd_checkout(newCommitHash));
-	REQUIRE(readFile(testFile)==testFileContentV2);
+	REQUIRE(readFile(testFile1)==testFile1ContentV2);
+	REQUIRE(readFile(testFile2)==testFile2ContentV2);
 }

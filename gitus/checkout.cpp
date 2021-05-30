@@ -4,12 +4,14 @@ void cmd_checkout_help()
     println("     \t\t Usage: ./gitus checkout <commit_hash>\n");
 }
 
-std::vector<std::string> getListOfCommitsHashes(){
+std::vector<std::string> getListOfCommitsHashes()
+{
     std::vector<std::string> commitsHashesArray;
     std::string currentCommitHash=readFile(".git/HEAD");
     std::string prevHash;
     std::string currentHash=currentCommitHash;
-    while(currentHash!=prevHash){
+    while(currentHash!=prevHash)
+    {
         commitsHashesArray.push_back(currentHash);
         prevHash=currentHash;
         std::string content=readFile(objectPathOfHash(currentHash));
@@ -30,8 +32,10 @@ void recursiveCheckoutForFiles(std::string treeHash,std::string subFolder,bool f
 
     std::ifstream tree(objectPathOfHash(treeHash));
     std::string type,hash,name;
-    while(tree>>type>>hash>>name){
-        if(type=="blob"){
+    while(tree>>type>>hash>>name)
+    {
+        if(type=="blob")
+        {
             println("Changed file "+subFolder+name);
             createFile(subFolder+name);
             writeInFile(subFolder+name,getContentOfFileObject(hash),true);

@@ -22,7 +22,8 @@ std::string getContentOfFileObject(std::string hash)
 
     std::string fileContent;
     int elmenetIndex=0;
-    while(fileObject>>boost::io::quoted(line)){
+    while(fileObject>>boost::io::quoted(line))
+    {
         if(elmenetIndex<2) elmenetIndex++;
         else fileContent+=line;
     }
