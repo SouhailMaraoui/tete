@@ -75,7 +75,7 @@ int cmd_commit(const std::string& message,const std::string& author)
         println("This is not a gitus repository.");
         return -1;
     }
-    if (boost::filesystem::exists(".lock"))
+    if (boost::filesystem::exists(".git/.lock"))
     {
         println("You can't commit as you are curretly checking out a different commit than the one in HEAD.");
         return -1;

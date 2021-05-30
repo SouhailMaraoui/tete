@@ -138,3 +138,9 @@ TEST_CASE("gitus checkout")
 	REQUIRE(readFile(testFile1)==testFile1ContentV2);
 	REQUIRE(readFile(testFile2)==testFile2ContentV2);
 }
+
+TEST_CASE("gitus log") 
+{
+	REQUIRE(cmd_log()==0);
+	REQUIRE(removeFolder(".git")==0);
+}

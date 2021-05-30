@@ -80,7 +80,7 @@ int  cmd_checkout(std::string commitHash)
     }
     if(found)
     {
-        if(!boost::filesystem::exists(".lock"))
+        if(!boost::filesystem::exists(".git/.lock"))
         {
 
             if(hashIndex==0)
@@ -89,8 +89,8 @@ int  cmd_checkout(std::string commitHash)
             }
             else
             {
-                createFile(".lock");
-                writeInFile(".lock",commitHash,true);
+                createFile(".git/.lock");
+                writeInFile(".git/.lock",commitHash,true);
                 
                 int recursionIndex=1;
                 while(recursionIndex<=hashIndex)
@@ -103,7 +103,7 @@ int  cmd_checkout(std::string commitHash)
         }
         else
         {
-            std::string prevCheckoutHash=readFile(".lock");
+            std::string prevCheckoutHash=readFile(".git/.lock");
             int prevCheckoutIndex=0;
             for(;prevCheckoutIndex<commitsHashesArray.size();prevCheckoutIndex++)
             {
@@ -137,7 +137,7 @@ int  cmd_checkout(std::string commitHash)
             }
             if(hashIndex==0)
             {
-                boost::filesystem::remove(".lock");
+                boost::filesystem::remove(".git/.lock");
             }
         }
     }
