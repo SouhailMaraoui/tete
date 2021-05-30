@@ -4,7 +4,7 @@ void cmd_init_help()
     println("     \t\t Usage: ./gitus init\n");
 }
 
-void cmd_init()
+int cmd_init()
 {
     if(createFolder(".git")==0)
     {
@@ -12,6 +12,7 @@ void cmd_init()
         createFile(".git/index");
         createFile(".git/HEAD");
         println("Gitus repository created.");
+        return 0;
     }
     else
     {
@@ -21,8 +22,9 @@ void cmd_init()
         if(response=="y")
         {
             removeFolder(".git");
-            cmd_init();
+            return cmd_init();
         }
+        return -1;
     }
         
 }

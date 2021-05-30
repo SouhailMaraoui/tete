@@ -66,11 +66,12 @@ void createCommitObject(const std::string& commitObjectContent,const std::string
     writeInFile(".git/HEAD",sha1,true);
 }
 
-void cmd_commit(const std::string& message,const std::string& author)
+int cmd_commit(const std::string& message,const std::string& author)
 {
     if (boost::filesystem::exists(".lock"))
     {
         println("You can't commit as you are curretly checking out a different commit than the one in HEAD.");
+        return -1;
     }
     else
     {
@@ -88,5 +89,6 @@ void cmd_commit(const std::string& message,const std::string& author)
 
         createCommitObject(commitObjectContent,message,author);
         writeInFile(".git/index","",true);
+        return 0;
     }  
 }

@@ -72,18 +72,26 @@ void cmd_checkout(std::string commitHash)
     {
         if(!boost::filesystem::exists(".lock"))
         {
-            createFile(".lock");
-            writeInFile(".lock",commitHash,true);
-            
-            int recursionIndex=1;
-            while(recursionIndex<=hashIndex)
+
+            if(hashIndex==0)
             {
-                println("===> Checking out "+commitsHashesArray[recursionIndex]);
-                recursiveCheckoutForFiles(commitsHashesArray[recursionIndex],"",true);
-                    recursionIndex++;
+                println("You are already in HEAD.");
+            }
+            else
+            {
+                createFile(".lock");
+                writeInFile(".lock",commitHash,true);
+                
+                int recursionIndex=1;
+                while(recursionIndex<=hashIndex)
+                {
+                    println("===> Checking out "+commitsHashesArray[recursionIndex]);
+                    recursiveCheckoutForFiles(commitsHashesArray[recursionIndex],"",true);
+                        recursionIndex++;
+                }
             }
         }
-        else if(hashIndex>0)
+        else
         {
             std::string prevCheckoutHash=readFile(".lock");
             int prevCheckoutIndex=0;
@@ -121,10 +129,6 @@ void cmd_checkout(std::string commitHash)
             {
                 boost::filesystem::remove(".lock");
             }
-        }
-        else
-        {
-            println("You are already in HEAD.");
         }
     }
     else
