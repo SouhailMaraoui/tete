@@ -1,9 +1,9 @@
 # EQ30 - Maraoui Souhail (mars3319)
 
-Voici l'ensomble des commandes que j'ai implémentées :
+Voici l'ensemble des commandes que j'ai implémentées :
 
 ### **init** `(./gitus init)`
-Pour initialiser un dépôt de gitus ou le reinstialiser s'il existe deja (Il vous donne le choix (y/n)).
+Pour initialiser un dépôt de gitus ou le réinitialiser s'il existe déjà (Il vous donne le choix (y/n)).
 
 ### **log** `(./gitus log)`
 Pour voir votre historique des commits.
@@ -15,10 +15,10 @@ Pour ajouter un fichier au staging area de gitus.
 Pour faire un commit des fichiers qui du `.git/index`.
 
 ### **checkout** `(./gitus checkout <hash>)`
-Pour consulter une autre version de dépôt (Veuillez entrer tous le Hash de commit, vous pouvez le copier du l'historique avec `./gitus log`)
+Pour consulter une autre version de dépôt (Veuillez entrer tous le Hash de commit, vous pouvez le copier du l'historique avec `./gitus log`).
 
 ## Tests
-Pour les tests, qu'ils suivent l'ordre logique d'une utilisation normal de git : 
+Pour les tests, ils suivent l'ordre logique d'une utilisation normal de git : 
 * On crée un nouveau dépôt (ou le réinitialiser s'il existe déjà);
 * On crée deux ficher `testFile1` et `testFile2` et on les remplis;
 * On ajoute les deux fichiers au staging area;
