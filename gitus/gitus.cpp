@@ -1,3 +1,22 @@
+/*
+*   SD - COMMENTAIRES
+* 
+*   checkout +10
+* 
+*   create_directories peut lancer une exception dans le code -5
+* 
+*   constance des accolades -2
+* 
+*   ajouter des constantes-2
+* 
+*   sha1 doit possede 40 caracteres -5
+* 
+*   25/25 +5checkout
+* 
+*   101/100
+*   max --> 100/100
+* 
+*/
 
 #include <fstream>
 #include <iostream>
@@ -16,7 +35,7 @@
 #include "fileManager.cpp"
 #include "objectManager.cpp"
 
-#include "init.cpp"
+#include "init.cpp" // SD - attention aux erreurs... (avait iit.cpp)
 #include "add.cpp"
 #include "log.cpp"
 #include "commit.cpp"
@@ -39,7 +58,7 @@ int main(int argc, char * argv[])
         if(argc>2 && std::string(argv[2])=="--help")
         {
             std::string argv1 = argv[1];
-            if(argv1=="init") cmd_init_help();
+            if(argv1=="init") cmd_init_help(); // SD - constante -2
             else if(argv1=="log") cmd_log_help();
             else if(argv1=="add") cmd_add_help();
             else if(argv1=="commit") cmd_commit_help();
@@ -48,7 +67,7 @@ int main(int argc, char * argv[])
         else if(argc>1)
         {
             std::string argv1 = argv[1];
-            if(argv1=="init") cmd_init();
+            if(argv1=="init") cmd_init(); // SD - constance des accolades -2
 
             else if(argv1=="log") cmd_log();
             

@@ -4,7 +4,7 @@ int createFolder(const std::string& foldername)
     const auto folderpath = path.append(foldername);
     if (!boost::filesystem::exists(folderpath))
 	{
-        boost::filesystem::create_directory(folderpath);
+        boost::filesystem::create_directory(folderpath); // SD - peut lancer une exception -5
         return 0;
     }
     return -1;

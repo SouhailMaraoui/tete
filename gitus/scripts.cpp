@@ -30,7 +30,7 @@ std::string getSHA1(const std::string& valueToHash)
 
 	std::string result;
 	for (int i = 0; i < 5; ++i) 
-		stream << std::hex << hash[i]; 
+		stream << std::hex << hash[i]; // SD - possibilite de ne pas avoir 40 caracteres -5
 
     return stream.str();
 }
