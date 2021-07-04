@@ -4,20 +4,23 @@ void cmd_build_help()
     println("     \t\t Usage: ./buildus [configFile] [pathToBuild]\n");
 }
 
-int setupEnvirement(std::string buildPath, std::string intermediateFolder)
+int setupEnvirement(std::string buildPath, std::string intermediateFolder,std::string compileHistoryPath)
 {
     createFolder(buildPath);
     createFolder(intermediateFolder);
+    createFile(compileHistoryPath);
     return 0;
 }
 
 int cmd_build(std::string buildFilePath, std::string buildPath)
 {
-       std::string intermediateFolder="intermediate/";
-    setupEnvirement(buildPath,intermediateFolder);
+    std::string intermediateFolder="intermediate/";
+    std::string compileHistoryPath=intermediateFolder+"compileHistory";
+    setupEnvirement(buildPath,intermediateFolder,compileHistoryPath);
 
 
     BuildYAML buildYAML=buildYAMLObject(buildFilePath);
+    std::string compileHistoryContent=readFile(compileHistoryPath);
     std::string intermediateFiles = "";
 
     buildYAML.display();
@@ -26,9 +29,18 @@ int cmd_build(std::string buildFilePath, std::string buildPath)
     auto compileFiles=buildYAML.getCompile();
     for(auto compileFile = compileFiles.begin(); compileFile != compileFiles.end(); ++compileFile)
     {
-        std::string compileCMD="g++ -c "+compileFile->second + " -o " + intermediateFolder+compileFile->first;
-        println(compileCMD);
-        std::system(compileCMD.c_str());
+        std::string content=readFile(compileFile->second);
+        std::string fileHash=getSHA1(content);
+        if(!isCompiled(compileHistoryPath,compileFile->second,fileHash))
+        {
+            std::string compileCMD="g++ -c "+compileFile->second + " -o " + intermediateFolder+compileFile->first;
+            println(compileCMD);
+            std::system(compileCMD.c_str());
+            insertToHistory(compileHistoryPath,compileFile->second,fileHash);
+        }
+        else{
+            println("No need to recompile the file " + compileFile->second);
+        }   
         intermediateFiles+=intermediateFolder+compileFile->first+" ";
     }
 
@@ -66,6 +78,5 @@ int cmd_build(std::string buildFilePath, std::string buildPath)
     }
     println("To... "+buildPath);
 
-    return 0;  
     return 0;  
 }
