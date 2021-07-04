@@ -1,14 +1,9 @@
 
 #include <iostream>
 #include <sstream>
-#include <fstream>
 #include <string>
 
 #include <boost/filesystem.hpp>
-#include <boost/iostreams/copy.hpp>
-#include <boost/iostreams/device/back_inserter.hpp>
-#include <boost/iostreams/filter/zlib.hpp>
-#include <boost/iostreams/filtering_streambuf.hpp>
 #include <boost/uuid/detail/sha1.hpp>
 
 #include "BuildYAML.cpp"

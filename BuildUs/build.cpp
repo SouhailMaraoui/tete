@@ -42,7 +42,7 @@ int compileFileFunc(const std::string sourceFile,const std::string intermediateF
 
 void cmd_build(std::string buildFilePath, std::string buildPath)
 {
-    // Add a '/' to the build path if the user didn't add one..
+    // Add a '/' to the build path if the user didn't add one.. so "folder/build" => "folder/build/"
     if(buildPath.back()!='/')
     {
         buildPath+="/";
@@ -64,7 +64,7 @@ void cmd_build(std::string buildFilePath, std::string buildPath)
         auto compileFiles=buildYAML.getCompile();
         for(auto compileFile = compileFiles.begin(); compileFile != compileFiles.end(); ++compileFile)
         {
-            compileFileFunc(sourceBuildFolder+compileFile->second,sourceBuildFolder+compileFile->first,compileHistoryPath);  
+            compileFileFunc(sourceBuildFolder+compileFile->second,intermediateFolder+compileFile->first,compileHistoryPath);  
             intermediateFiles+=intermediateFolder+compileFile->first+" ";
         }
         println("===========> Done\n");
@@ -101,16 +101,16 @@ void cmd_build(std::string buildFilePath, std::string buildPath)
             boost::filesystem::path destPath(buildPath);
 
             boost::filesystem::path dir = boost::filesystem::path(*file).parent_path();
-            std::string newFolder=(destPath.append(dir.string())).string();
+            std::string newFolder=(boost::filesystem::path(buildPath).append(dir.string())).string();
             createFolder(newFolder);
             try
             {
                 boost::filesystem::copy_file(src,destPath.append(*file));
-                println("Copied file '"+*file+"'");
+                println("Copied the file '"+*file+"'");
             }
             catch(...) 
             {
-                throw "Could not copy the file '"+*file+"'";
+                println("Could not copy the file '"+*file+"'");
             }
         }
         println("===========> Done\n");
