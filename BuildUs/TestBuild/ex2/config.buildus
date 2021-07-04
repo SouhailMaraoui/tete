@@ -1,0 +1,8 @@
+project: hello-world-2
+deps_library:
+ var: lib
+ libs:
+ - Test
+compile:
+ - main: main.cpp
+

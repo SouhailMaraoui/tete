@@ -1,0 +1,5 @@
+project: hello-world-1
+compile:
+ - main: main.cpp
+ - util: util.cpp
+

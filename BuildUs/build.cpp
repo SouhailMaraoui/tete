@@ -15,6 +15,7 @@ int setupEnvirement(std::string buildPath, std::string intermediateFolder,std::s
 int cmd_build(std::string buildFilePath, std::string buildPath)
 {
     std::string sourceBuildFolder = boost::filesystem::path(buildFilePath).parent_path().string()+"/";
+    buildPath=sourceBuildFolder+buildPath;
     std::string intermediateFolder="intermediate/";
     std::string compileHistoryPath=intermediateFolder+"compileHistory";
     setupEnvirement(buildPath,intermediateFolder,compileHistoryPath);
@@ -48,11 +49,11 @@ int cmd_build(std::string buildFilePath, std::string buildPath)
 
         auto includesVector=buildYAML.getDeps_include_var();
         std::string dependencyInclude="";
-        if(includesVector.length()>0) dependencyInclude+=" -I"+includesVector;
+        if(includesVector.length()>0) dependencyInclude+=" -I"+sourceBuildFolder+includesVector;
 
         auto librariesPathVector=buildYAML.getDeps_library_var();
         std::string dependencyLibraryPath="";
-        if(librariesPathVector.length()>0) dependencyLibraryPath+=" -I"+librariesPathVector;
+        if(librariesPathVector.length()>0) dependencyLibraryPath+=" -static -L"+sourceBuildFolder+librariesPathVector;
 
         auto librariesVector=buildYAML.getDeps_library_lib();
         std::string dependencyLibrary="";
