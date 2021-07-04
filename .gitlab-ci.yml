@@ -11,7 +11,7 @@ build:
     - cmake ..
     - make
     - cd ..
-    - cp TestBuild/ build/
+    - cp -r TestBuild/ build/
   artifacts:
     paths:
       - build/
