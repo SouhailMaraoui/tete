@@ -19,4 +19,5 @@ build:
 test:
   stage: test
   script:
-    - BuildUs/build/tests/tests
+    - cd BuildUs/build
+    - tests/tests
