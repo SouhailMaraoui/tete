@@ -29,7 +29,7 @@ void cmd_help()
 
 int main(int argc, char * argv[])
 {
-    if(argc>1)
+    if(argc==2)
     {
         if(std::string(argv[1])=="--help")
         {
@@ -40,7 +40,7 @@ int main(int argc, char * argv[])
             cmd_clean();
         }
     }
-    if(argc>2)
+    else if(argc==3)
     {
         if(std::string(argv[2])=="--help")
         {

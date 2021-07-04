@@ -38,11 +38,10 @@ int createFile(const std::string& filename)
 
 std::string readFile(const std::string& filename)
 {
-    
-    try
+
+    std::ifstream file(filename);
+    if(file.is_open())
     {
-        std::ifstream file(filename);
-        file.is_open();
         std::stringstream content;
         content <<file.rdbuf();
         std::string ret=content.str();
@@ -53,10 +52,9 @@ std::string readFile(const std::string& filename)
         
         return ret;
     }
-    catch(std::ios_base::failure& e)
+    else
     {
-        std::cout << "Could not read from file " << filename <<std::endl;
-        return nullptr;
+        throw "Could not read from file \""+filename+"\".";
     }
 }
 
@@ -71,7 +69,8 @@ std::string writeInFile(const std::string& filename, const std::string& content,
     if(file)
         file<<content<<std::endl;
     else
-        std::cout << "Could not write into file "<< filename <<std::endl;
+        throw "Could not write into file " + filename;
+    
     file.close();
     return filename;
 }
@@ -81,83 +80,88 @@ A function that take the yaml config file and build an Object of type BuildYAML.
 */
 BuildYAML buildYAMLObject(std::string filename)
 {
-    BuildYAML buildYAML;
-
-    std::string content=readFile(filename); 
-    std::istringstream stream(content);
-    
-
-    std::string line,parent,subparent;
-
-    while(std::getline(stream,line))
+    try
     {
-        if(line.rfind("project",0)==0){
-            parent="project";
-        }
-        else if(line.rfind("deps_include",0)==0){
-            parent="deps_include";
-            continue;
-        }
-        else if(line.rfind("deps_library",0)==0){
-            parent="deps_library";
-            continue;
-        }
-        else if(line.rfind("compile",0)==0){
-            parent="compile";
-            continue;
-        }
-        else if(line.rfind("files",0)==0){
-            parent="files";
-            continue;
-        }
+        BuildYAML buildYAML;
 
-        std::istringstream iss(line);
-        std::string a, b,c,d;
-        iss>>a>>b>>c>>d;
+        std::string content=readFile(filename);
+        std::string line,parent,subparent;
+        std::istringstream stream(content);
 
-        
-        /*
-        In case there was a space between an element and the colon ":", remove that space and translate to the left.
-        So for example "project : app2" will turn into "project: app2"
-        Or " - f1 : file1.cpp" will turn into "- f1: file1.cpp"
-        */
-        if(b==":")
+        while(std::getline(stream,line))
         {
-            a+=b;
-            b=c;
-        }
-        else if(c==":")
-        {
-            b+=c;
-            c=d;
-        }
+            if(line.rfind("project",0)==0){
+                parent="project";
+            }
+            else if(line.rfind("deps_include",0)==0){
+                parent="deps_include";
+                continue;
+            }
+            else if(line.rfind("deps_library",0)==0){
+                parent="deps_library";
+                continue;
+            }
+            else if(line.rfind("compile",0)==0){
+                parent="compile";
+                continue;
+            }
+            else if(line.rfind("files",0)==0){
+                parent="files";
+                continue;
+            }
 
-        if(a=="libs:"){
-            subparent="libs";
-            continue;
-        }
+            std::istringstream iss(line);
+            std::string elm1, elm2,elm3,elm4;
+            iss>>elm1>>elm2>>elm3>>elm4;
 
-        if(parent=="project"){
-            buildYAML.setProject(b);
-        }
-        else if(parent=="deps_include"){
-            if(a=="var:") {
-                buildYAML.setDeps_include_var(b);
+            
+            /*
+            In case there was a space between an element and the colon ":", remove that space and translate to the left.
+            So for example "project : app2" will turn into "project: app2"
+            Or " - f1 : file1.cpp" will turn into "- f1: file1.cpp"
+            */
+            if(elm2==":")
+            {
+                elm1+=elm2;
+                elm2=elm3;
+            }
+            else if(elm3==":")
+            {
+                elm2+=elm3;
+                elm3=elm4;
+            }
+
+            if(elm1=="libs:"){
+                subparent="libs";
+                continue;
+            }
+
+            if(parent=="project"){
+                buildYAML.setProject(elm2);
+            }
+            else if(parent=="deps_include"){
+                if(elm1=="var:") {
+                    buildYAML.setDeps_include_var(elm2);
+                }
+            }
+            else if(parent=="deps_library"){
+                if(elm1=="var:") {
+                    buildYAML.setDeps_library_var(elm2);
+                }
+                if(subparent=="libs") 
+                    buildYAML.pushDeps_library_lib(elm2);
+            }
+            else if(parent=="compile"){
+                buildYAML.pushCompile(elm2.substr(0,elm2.size()-1),elm3);
+            }
+            else if(parent=="files"){
+                buildYAML.pushFiles(elm2);
             }
         }
-        else if(parent=="deps_library"){
-            if(a=="var:") {
-                buildYAML.setDeps_library_var(b);
-            }
-            if(subparent=="libs") 
-                buildYAML.pushDeps_library_lib(b);
-        }
-        else if(parent=="compile"){
-            buildYAML.pushCompile(b.substr(0,b.size()-1),c);
-        }
-        else if(parent=="files"){
-            buildYAML.pushFiles(b);
-        }
+        return buildYAML;
     }
-    return buildYAML;
+    catch(std::string error)
+    {
+        throw error;
+    }
 }

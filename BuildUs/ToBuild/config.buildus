@@ -1,4 +1,7 @@
 project: helloworld
 compile:
- - intermediaire: ToBuild/helloworld.cpp
+ - intermediaire: helloworld.cpp
+files:
+ - file1
+ - folder/file2
 
