@@ -1,0 +1,23 @@
+image: smaraoui2/lab3
+
+build:
+  stage: build
+  script:
+    - apt-get install -y zlib1g-dev zlib1g
+    - cd /boost_1_75_0
+    - ./b2 --with-iostreams -a
+    - cd /builds/dinf/cours/e21/IGL601/equipes/eq30/BuildUs
+    - mkdir build && cd build
+    - cmake ..
+    - make
+    - cd ..
+    - cp TestBuild/ build/
+  artifacts:
+    paths:
+      - build/
+
+test:
+  stage: test
+  script:
+    - ls build/
+    - build/tests/tests
