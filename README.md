@@ -1,2 +1,1 @@
-# EQ30
-
+# EQ30 - Maraoui Souhail (mars3319)

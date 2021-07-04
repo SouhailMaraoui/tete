@@ -1,0 +1,4 @@
+project: helloworld
+compile:
+ - intermediaire: ToBuild/helloworld.cpp
+
