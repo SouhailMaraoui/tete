@@ -14,10 +14,9 @@ build:
     - cp -r TestBuild/ build/
   artifacts:
     paths:
-      - build/
+      - BuildUs/build/
 
 test:
   stage: test
   script:
-    - ls build/
-    - build/tests/tests
+    - BuildUs/build/tests/tests
