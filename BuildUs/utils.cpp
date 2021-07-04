@@ -51,6 +51,5 @@ std::string insertToHistory(std::string compileHistoryPath, std::string filePath
         }
     }
     output+=filePath+" " + newHash + "\n";
-    println(output);
     return writeInFile(compileHistoryPath,output,true);
 }

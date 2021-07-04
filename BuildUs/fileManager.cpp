@@ -4,13 +4,20 @@ int createFolder(const std::string& foldername)
     const auto folderpath = path.append(foldername);
     if (!boost::filesystem::exists(folderpath))
 	{
-        boost::filesystem::create_directories(folderpath);
+        try
+        {
+            boost::filesystem::create_directories(folderpath);
+        }
+        catch(...)
+        {
+            throw "Could not create the folder '" +foldername+"'";
+        }
         return 0;
     }
     return -1;
 }
 
-int  removeFolder(const std::string& foldername)
+int removeFolder(const std::string& foldername)
 {
     auto path = boost::filesystem::current_path();
     const auto folderpath = path.append(foldername);
@@ -90,22 +97,27 @@ BuildYAML buildYAMLObject(std::string filename)
 
         while(std::getline(stream,line))
         {
-            if(line.rfind("project",0)==0){
+            if(line.rfind("project",0)==0)
+            {
                 parent="project";
             }
-            else if(line.rfind("deps_include",0)==0){
+            else if(line.rfind("deps_include",0)==0)
+            {
                 parent="deps_include";
                 continue;
             }
-            else if(line.rfind("deps_library",0)==0){
+            else if(line.rfind("deps_library",0)==0)
+            {
                 parent="deps_library";
                 continue;
             }
-            else if(line.rfind("compile",0)==0){
+            else if(line.rfind("compile",0)==0)
+            {
                 parent="compile";
                 continue;
             }
-            else if(line.rfind("files",0)==0){
+            else if(line.rfind("files",0)==0)
+            {
                 parent="files";
                 continue;
             }
@@ -131,30 +143,38 @@ BuildYAML buildYAMLObject(std::string filename)
                 elm3=elm4;
             }
 
-            if(elm1=="libs:"){
+            if(elm1=="libs:")
+            {
                 subparent="libs";
                 continue;
             }
 
-            if(parent=="project"){
+            if(parent=="project")
+            {
                 buildYAML.setProject(elm2);
             }
-            else if(parent=="deps_include"){
-                if(elm1=="var:") {
+            else if(parent=="deps_include")
+            {
+                if(elm1=="var:") 
+                {
                     buildYAML.setDeps_include_var(elm2);
                 }
             }
-            else if(parent=="deps_library"){
-                if(elm1=="var:") {
+            else if(parent=="deps_library")
+            {
+                if(elm1=="var:") 
+                {
                     buildYAML.setDeps_library_var(elm2);
                 }
                 if(subparent=="libs") 
                     buildYAML.pushDeps_library_lib(elm2);
             }
-            else if(parent=="compile"){
+            else if(parent=="compile")
+            {
                 buildYAML.pushCompile(elm2.substr(0,elm2.size()-1),elm3);
             }
-            else if(parent=="files"){
+            else if(parent=="files")
+            {
                 buildYAML.pushFiles(elm2);
             }
         }

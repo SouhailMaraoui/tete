@@ -73,24 +73,4 @@ class BuildYAML
         {
             this->files.push_back(file);
         }
-        
-        void display(){
-            std::cout <<"==project:"<< std::endl;
-            std::cout <<project << std::endl;
-            std::cout <<"==inc var:"<< std::endl;
-            std::cout <<deps_include_var << std::endl;
-            std::cout <<"==libs var:"<< std::endl;
-            std::cout <<deps_library_var << std::endl;
-            std::cout <<"==libs libs:"<< std::endl;
-            std::copy(deps_library_lib.begin(), deps_library_lib.end(), std::ostream_iterator<std::string>(std::cout, "\n"));
-
-            std::cout <<"==compile:"<< std::endl;
-            for(auto it = compile.cbegin(); it != compile.cend(); ++it)
-            {
-                std::cout << it->first << " " << it->second<< "\n";
-            }
-            std::cout <<"==files:"<< std::endl;
-            std::copy(files.begin(), files.end(), std::ostream_iterator<std::string>(std::cout, "\n"));
-        }
-
 };

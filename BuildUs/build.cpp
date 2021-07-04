@@ -1,51 +1,74 @@
 void cmd_build_help()
 {
-    println("- build\t\t Build a c++ program from a config file.");
+    println("- build\t\t Build a c++ program from a config file to a path.");
     println("     \t\t Usage: ./buildus [configFile] [pathToBuild]\n");
 }
 
-int setupEnvirement(std::string buildPath, std::string intermediateFolder,std::string compileHistoryPath)
+/*
+A function that setup the build environment :
+    - Create the build path;
+    - Create the intermediate folder where ./buildus was executed;
+    - create 'compileHistory' file which contains the name and hash of all previously compiled files.
+*/
+void setupEnvirement(const std::string buildPath,const std::string intermediateFolder,const std::string compileHistoryPath)
 {
     createFolder(buildPath);
     createFolder(intermediateFolder);
     createFile(compileHistoryPath);
-    return 0;
 }
 
-int cmd_build(std::string buildFilePath, std::string buildPath)
+/*
+A function that check in the compile history to see if the file has already been compiled (Using it's {path+name} and {SHA1(fileContent)} for validation),
+And then compile it if it has not been compiled previously or was changed.
+*/
+int compileFileFunc(const std::string sourceFile,const std::string intermediateFile, const std::string compileHistoryPath)
 {
+    std::string content=readFile(sourceFile);
+    std::string fileHash=getSHA1(content);
+    if(!isCompiled(compileHistoryPath,sourceFile,fileHash))
+    {
+        std::string compileCMD="g++ -c "+sourceFile+ " -o " + intermediateFile;
+        std::system(compileCMD.c_str());
+        println(compileCMD);
+        insertToHistory(compileHistoryPath,sourceFile,fileHash);
+        return 0;
+    }
+    else{
+        println("No need to recompile the file " + sourceFile);
+        return 1;
+    }   
+}
+
+
+void cmd_build(std::string buildFilePath, std::string buildPath)
+{
+    // Add a '/' to the build path if the user didn't add one..
+    if(buildPath.back()!='/')
+    {
+        buildPath+="/";
+    }
+
     std::string sourceBuildFolder = boost::filesystem::path(buildFilePath).parent_path().string()+"/";
-    buildPath=sourceBuildFolder+buildPath;
     std::string intermediateFolder="intermediate/";
     std::string compileHistoryPath=intermediateFolder+"compileHistory";
     setupEnvirement(buildPath,intermediateFolder,compileHistoryPath);
 
-
     try
     {
         BuildYAML buildYAML=buildYAMLObject(buildFilePath);
-        buildYAML.display();
-        std::string intermediateFiles = "";
-        std::string compileHistoryContent=readFile(compileHistoryPath);
 
-        println("===========> Compiling");
+        std::string compileHistoryContent=readFile(compileHistoryPath);
+        std::string intermediateFiles = "";
+
+        println("\n===========> Compiling");
         auto compileFiles=buildYAML.getCompile();
         for(auto compileFile = compileFiles.begin(); compileFile != compileFiles.end(); ++compileFile)
         {
-            std::string content=readFile(sourceBuildFolder+compileFile->second);
-            std::string fileHash=getSHA1(content);
-            if(!isCompiled(compileHistoryPath,compileFile->second,fileHash))
-            {
-                std::string compileCMD="g++ -c "+sourceBuildFolder+compileFile->second + " -o " + intermediateFolder+compileFile->first;
-                println(compileCMD);
-                std::system(compileCMD.c_str());
-                insertToHistory(compileHistoryPath,sourceBuildFolder+compileFile->second,fileHash);
-            }
-            else{
-                println("No need to recompile the file " + sourceBuildFolder+compileFile->second);
-            }   
+            compileFileFunc(sourceBuildFolder+compileFile->second,sourceBuildFolder+compileFile->first,compileHistoryPath);  
             intermediateFiles+=intermediateFolder+compileFile->first+" ";
         }
+        println("===========> Done\n");
+
 
         auto includesVector=buildYAML.getDeps_include_var();
         std::string dependencyInclude="";
@@ -62,10 +85,13 @@ int cmd_build(std::string buildFilePath, std::string buildPath)
             dependencyLibrary+=" -l"+*library;
         }
         
+
         println("===========> Building");
         std::string buildCMD="g++ " +intermediateFiles+ " -o " + buildPath+buildYAML.getProject() + dependencyInclude + dependencyLibraryPath + dependencyLibrary;
-        println(buildCMD);
         std::system(buildCMD.c_str());
+        println(buildCMD);
+        println("===========> Done\n");
+
 
         println("===========> Copying Files");
         auto filesVector=buildYAML.getFiles();
@@ -75,23 +101,22 @@ int cmd_build(std::string buildFilePath, std::string buildPath)
             boost::filesystem::path destPath(buildPath);
 
             boost::filesystem::path dir = boost::filesystem::path(*file).parent_path();
-            std::string newFolder=(boost::filesystem::path(buildPath).append(dir.string())).string();
+            std::string newFolder=(destPath.append(dir.string())).string();
             createFolder(newFolder);
             try
             {
                 boost::filesystem::copy_file(src,destPath.append(*file));
+                println("Copied file '"+*file+"'");
             }
             catch(...) 
             {
-                throw "Could not copy the file "+*file;
+                throw "Could not copy the file '"+*file+"'";
             }
-            //boost::filesystem::path(buildPath).append(boost::filesystem::path(*file).filename())
         }
-        
+        println("===========> Done\n");
     }
     catch (std::string e)
     {
         println(e);
     }
-    return 0;  
 }
