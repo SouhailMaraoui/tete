@@ -1,4 +1,27 @@
-
+/*
+*   SD - CORRECTION
+* 
+*   cmake
+*       fichiers manquant build.h/.cpp, util.cpp, clean.cpp et fileManagement.cpp -10
+* 
+*   nomenclature (-8)
+*       ajout de constante -2
+*       constance des accolades -2
+*       nom de variable non significatif -2
+*       lisibilite (code en sois et manque d'espace entre elements de code) -2
+*   
+*   non respect des consignes
+*       assumer que les fichiers sont dans root -10
+*
+*   test
+*       5/20
+* 
+*   ci
+*       15/15
+* 
+*   56/100 
+* 
+*/
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -26,25 +49,25 @@ int main(int argc, char * argv[])
 {
     if(argc==2)
     {
-        if(std::string(argv[1])=="--help")
+        if(std::string(argv[1])=="--help") // SD - constante -2
         {
             cmd_help();
         }
-        else if(std::string(argv[1])=="clean")
+        else if(std::string(argv[1])=="clean") // SD - constante
         {
             cmd_clean();
         }
     }
     else if(argc==3)
     {
-        if(std::string(argv[2])=="--help")
+        if(std::string(argv[2])=="--help") // SD - constante
         {
             std::string argv1 = argv[1];
             if(argv1=="build") 
             {
                 cmd_build_help();
             }
-            else if(argv1=="clean")
+            else if(argv1=="clean") // SD - constante
             {
                 cmd_clean_help();
             }

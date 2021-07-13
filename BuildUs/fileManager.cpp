@@ -47,6 +47,7 @@ std::string readFile(const std::string& filename)
 {
 
     std::ifstream file(filename);
+
     if(file.is_open())
     {
         std::stringstream content;
@@ -69,7 +70,7 @@ std::string writeInFile(const std::string& filename, const std::string& content,
 {
     std::fstream file;
     if(overwrite)
-        file.open(filename,std::ios::out);
+        file.open(filename,std::ios::out); // SD - constance des accolades -2
     else
         file.open(filename,std::ios::app);
 
@@ -97,28 +98,28 @@ BuildYAML buildYAMLObject(std::string filename)
 
         while(std::getline(stream,line))
         {
-            if(line.rfind("project",0)==0)
+            if(line.rfind("project",0)==0) // SD - constante
             {
-                parent="project";
+                parent="project"; // SD - constante
             }
-            else if(line.rfind("deps_include",0)==0)
+            else if(line.rfind("deps_include",0)==0) // SD - constante
             {
-                parent="deps_include";
+                parent="deps_include"; // SD - constante
                 continue;
             }
-            else if(line.rfind("deps_library",0)==0)
+            else if(line.rfind("deps_library",0)==0) // SD - constante
             {
-                parent="deps_library";
+                parent="deps_library"; // SD - constante
                 continue;
             }
-            else if(line.rfind("compile",0)==0)
+            else if(line.rfind("compile",0)==0) // SD - constante
             {
-                parent="compile";
+                parent="compile"; // SD - constante
                 continue;
             }
-            else if(line.rfind("files",0)==0)
+            else if(line.rfind("files",0)==0) // SD - constante
             {
-                parent="files";
+                parent="files"; // SD - constante
                 continue;
             }
 
@@ -132,7 +133,7 @@ BuildYAML buildYAMLObject(std::string filename)
             So for example "project : app2" will turn into "project: app2"
             Or " - f1 : file1.cpp" will turn into "- f1: file1.cpp"
             */
-            if(elm2==":")
+            if(elm2==":") // SD - nom de variable -2
             {
                 elm1+=elm2;
                 elm2=elm3;

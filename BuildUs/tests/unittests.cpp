@@ -17,6 +17,14 @@
 #include "../build.cpp"
 #include "../clean.cpp"
 
+
+/*
+*	SD - 5/20 faible
+* 
+*	et si pas de nom de projet ou lib ou files ou includes? tests d'erreurs
+* 
+*/
+
 std::string configFileName="config.buildus";
 
 std::string test0Path="TestBuild/ex0/";

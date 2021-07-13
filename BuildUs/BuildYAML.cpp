@@ -17,6 +17,7 @@ class BuildYAML
         std::vector<std::string> files;
 
     public:
+
         std::string getProject()
         {
             return project;

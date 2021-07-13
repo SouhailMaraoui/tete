@@ -14,7 +14,7 @@ void setupEnvirement(const std::string buildPath,const std::string intermediateF
 {
     createFolder(buildPath);
     createFolder(intermediateFolder);
-    createFile(compileHistoryPath);
+    createFile(compileHistoryPath); // SD - overkill but ok
 }
 
 /*
@@ -47,10 +47,14 @@ void cmd_build(std::string buildFilePath, std::string buildPath)
     {
         buildPath+="/";
     }
-
-    std::string sourceBuildFolder = boost::filesystem::path(buildFilePath).parent_path().string()+"/";
+    // SD - qu'est-ce que tu fais la toi?
+    std::string sourceBuildFolder = boost::filesystem::path(buildFilePath).parent_path().string()+"/"; // SD - tu assumes beaucoup sur la position des fichiers
+    // SD - en prennant le parent de buildFilePath, qui a ce point, n'est que le fichier, tu te retrouve dans / (root), 
+    //      ceci brise toute possibilite de faire un read(filepath) puisque ton parent est root, 
+    //      tes paths seront jamais bons a moins qu'ils sont tous dans root, ce qui n'est pas necessairement le cas -10
     std::string intermediateFolder="intermediate/";
     std::string compileHistoryPath=intermediateFolder+"compileHistory";
+
     setupEnvirement(buildPath,intermediateFolder,compileHistoryPath);
 
     try
@@ -64,7 +68,7 @@ void cmd_build(std::string buildFilePath, std::string buildPath)
         auto compileFiles=buildYAML.getCompile();
         for(auto compileFile = compileFiles.begin(); compileFile != compileFiles.end(); ++compileFile)
         {
-            compileFileFunc(sourceBuildFolder+compileFile->second,intermediateFolder+compileFile->first,compileHistoryPath);  
+            compileFileFunc(sourceBuildFolder+compileFile->second, intermediateFolder+compileFile->first, compileHistoryPath);  
             intermediateFiles+=intermediateFolder+compileFile->first+" ";
         }
         println("===========> Done\n");
