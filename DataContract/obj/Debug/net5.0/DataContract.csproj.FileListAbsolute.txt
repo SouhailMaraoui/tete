@@ -1,0 +1,11 @@
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\bin\Debug\net5.0\DataContract.deps.json
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\bin\Debug\net5.0\DataContract.dll
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\bin\Debug\net5.0\ref\DataContract.dll
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\bin\Debug\net5.0\DataContract.pdb
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\obj\Debug\net5.0\DataContract.GeneratedMSBuildEditorConfig.editorconfig
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\obj\Debug\net5.0\DataContract.AssemblyInfoInputs.cache
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\obj\Debug\net5.0\DataContract.AssemblyInfo.cs
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\obj\Debug\net5.0\DataContract.csproj.CoreCompileInputs.cache
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\obj\Debug\net5.0\DataContract.dll
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\obj\Debug\net5.0\ref\DataContract.dll
+D:\MyCloud\Users\Souhail\S\Sherbooke\S21\IGL601\TP3\eq30\DataContract\obj\Debug\net5.0\DataContract.pdb

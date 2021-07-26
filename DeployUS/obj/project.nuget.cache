@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "YQLD+giLQT04U8hlyRcCwwhzgGo79OS8XhO6KHaXdOm+5MsEofXL6T0wedyoF16O57b35ekNY/FLQEXcx444gw==",
+  "success": true,
+  "projectFilePath": "D:\\MyCloud\\Users\\Souhail\\S\\Sherbooke\\S21\\IGL601\\TP3\\eq30\\DeployUS\\DeployUS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\smaraoui\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.14\\microsoft.visualstudio.azure.containers.tools.targets.1.10.14.nupkg.sha512",
+    "C:\\Users\\smaraoui\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -14,7 +14,6 @@ namespace ConnectionDB.Controllers
     public class WorkersController : ControllerBase
     {
         private readonly MyDbContext _context;
-
         public WorkersController(MyDbContext context)
         {
             _context = context;
@@ -39,35 +38,6 @@ namespace ConnectionDB.Controllers
             return worker;
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutWorker(int id, Worker worker)
-        {
-            if (id != worker.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(worker).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!WorkerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
         [HttpPost]
         public async Task<ActionResult<Worker>> PostWorker(Worker worker)
         {
@@ -90,11 +60,6 @@ namespace ConnectionDB.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool WorkerExists(int id)
-        {
-            return _context.Workers.Any(e => e.id == id);
         }
     }
 }
