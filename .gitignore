@@ -1,2 +1,5 @@
 .vs
 
+DataContract/obj/Debug
+ConnectionDB/obj/Debug
+DeployUS/obj/Debug
