@@ -15,5 +15,5 @@ Pour la plupart des services backend que j'ai créé avec Java, j'ai utilisé React
 ## **Exemple de Codes**
 Quant au code implémenté, j'ai construit 3 projets C# que vous trouverez dans la branche [TP3-TechTests](https://depot.dinf.usherbrooke.ca/dinf/cours/e21/IGL601/equipes/eq30/tree/TP3-TechTests) *(J'ai également effectué un "merge" des modifications à la branche actuelle -TP3- pour continuer le travail ici)*
 - Le premier un DataContract qui contient les classes partagées entre les différents projets : `Script` et `Worker`;
-- Le second est ConnectionDB qui gère la connexion avec une base de données locale utilisant le cadre d'entité;
-- Et enfin, le troisième projet DeployUs qui transmet -*pour le moment*- les requêtes Get, Post et Delete à ConnectionDB.
+- Le second est ConnectionDB qui gère la connexion avec une base de données locale utilisant Entity Framework;
+- Et enfin, le troisième projet DeployUs qui fait des simplement des forwards -*pour le moment*- les requêtes Get, Post et Delete à ConnectionDB.
