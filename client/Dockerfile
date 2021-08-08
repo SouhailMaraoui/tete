@@ -4,12 +4,12 @@ WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package.json ./
+COPY client/package.json ./
 
-COPY package-lock.json ./
+COPY client/package-lock.json ./
 
 RUN npm install --loglevel=error
 
-COPY . ./
+COPY client/ ./
 
 CMD ["npm", "start"]
