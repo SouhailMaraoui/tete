@@ -11,9 +11,5 @@ build-push:
   before_script:
     - docker login -u "$DOCKER_HUB_MARS3319_USERNAME" -p "$DOCKER_HUB_MARS3319_PASSWORD"
   script:
-    - docker build -f ConnectionDB/Dockerfile -t smaraoui2/connectiondb .
-    - docker build -f DeployUS/Dockerfile -t smaraoui2/deployus .
-    - docker build -f WorkUs/Dockerfile -t smaraoui2/workus .
-    - docker push smaraoui2/connectiondb
-    - docker push smaraoui2/deployus
-    - docker push smaraoui2/workus
+    - docker build -f client/Dockerfile -t smaraoui2/client .
+    - docker push smaraoui2/client

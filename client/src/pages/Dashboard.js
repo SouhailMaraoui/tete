@@ -82,7 +82,7 @@ export default function Dashboard() {
                     ? <Table obj={workerObj} elems={workers} setElems={setWorkers} type={"worker"}/>
                     : <h3>Loading....</h3>)}
                 {activeLink===1 && (scripts
-                    ? <Table obj={scriptObj} elems={scripts} setElems={setScripts} type={"script"} workers={workers}/>
+                    ? <Table obj={scriptObj} elems={scripts} setElems={setScripts} type={"script"} workers={workers} runnerObj={runnerObj}/>
                     : <h3>Loading....</h3>)}
             </EuiPageTemplate>
         </div>

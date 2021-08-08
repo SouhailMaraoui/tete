@@ -28,4 +28,13 @@ services:
       CONNECTIONDB_ADDR: http://connectiondb/
     ports:
       - 5001:80
+
+  client:
+    image: smaraoui2/client
+    depends_on:
+      - deployus
+    environment:
+      DEPLOYUS_ADDR: http://deployus/
+    ports:
+      - 80:3000
   

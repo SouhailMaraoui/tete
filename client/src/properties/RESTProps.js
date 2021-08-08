@@ -1,6 +1,6 @@
 
 const RESTProps = {
-    URL : "http://68.183.192.81:5001",
+    URL :process.env.DEPLOYUS_ADDR || "http://68.183.192.81:5001",
     WORKERS: "/api/workers/",
     SCRIPTS: "/api/scripts/"
 }
