@@ -20,16 +20,25 @@ namespace WorkUs.Controllers
         [HttpPost]
         public string Run(Script script)
         {
-            var escapedArgs = script.script.Replace("\"", "\\\"");
+            var scriptText = script.script.Replace("\"", "\\\"");
 
             ProcessStartInfo startInfo = new ProcessStartInfo() { 
                 FileName = "/bin/bash",
-                Arguments = $"-c \"{escapedArgs}\"",
+                Arguments = $"-c echo \"{scriptText}\" > docker-compose.yml && docker-compose up",
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                CreateNoWindow = true
             }; 
             Process proc = new Process() { StartInfo = startInfo, };
             proc.Start();
-            
-            return "Hello There!\nHere is your script: " + script.script;
+
+            string ret="";
+            while (!proc.StandardOutput.EndOfStream)
+            {
+                string line = proc.StandardOutput.ReadLine();
+                ret+=line;
+            }
+            return ret;
         }
     }
 }
