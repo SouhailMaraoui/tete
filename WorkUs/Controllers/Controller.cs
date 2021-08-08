@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace WorkUs.Controllers
 {
@@ -18,26 +19,31 @@ namespace WorkUs.Controllers
     {
 
         [HttpPost]
-        public string Run(Script script)
+        public Object Run(Script script)
         {
             var scriptText = script.script.Replace("\"", "\\\"");
 
+            System.IO.File.WriteAllText("docker-compose.yml", scriptText);
+
+            var cmd="docker-compose up --force-recreate -d"; 
+
             ProcessStartInfo startInfo = new ProcessStartInfo() { 
                 FileName = "/bin/bash",
-                Arguments = $"-c echo \"{scriptText}\" > docker-compose.yml && docker-compose up",
+                Arguments = $"-c \"{cmd}\"",
+                RedirectStandardError = true,
                 UseShellExecute = false,
-                RedirectStandardOutput = true,
-                CreateNoWindow = true
             }; 
+
             Process proc = new Process() { StartInfo = startInfo, };
             proc.Start();
 
-            string ret="";
-            while (!proc.StandardOutput.EndOfStream)
-            {
-                string line = proc.StandardOutput.ReadLine();
-                ret+=line;
-            }
+            while(!proc.WaitForExit(1000));
+
+            StreamReader reader = proc.StandardError;
+            var ret=new Dictionary<string, string>();
+            ret.Add("ExitCode",proc.ExitCode.ToString());
+            ret.Add("Message",reader.ReadLine());
+
             return ret;
         }
     }
