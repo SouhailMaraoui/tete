@@ -1,0 +1,35 @@
+version: '3'  
+  
+services:  
+  database:
+    image: mysql
+    hostname: 'sqlserver'
+    volumes:
+      - /db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 3306:3306
+
+  connectiondb:  
+    build:  
+      context: .  
+      dockerfile: ConnectionDB/Dockerfile  
+    depends_on:
+      - database
+    environment:
+      DATABASE_PROPS: "Server=sqlserver; Database=deployus; Uid=root; Pwd=password;"
+    ports:
+      - 5000:80
+
+  deployus:  
+    build:  
+      context: .  
+      dockerfile: DeployUS/Dockerfile  
+    depends_on:
+      - connectiondb
+    environment:
+      CONNECTIONDB_ADDR: http://connectiondb/
+    ports:
+      - 5001:80
+  

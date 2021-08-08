@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["WorkUs/WorkUs.csproj", "WorkUs/"]
+COPY ["DataContract/DataContract.csproj", "DataContract/"]
 RUN dotnet restore "WorkUs/WorkUs.csproj"
 COPY . .
 WORKDIR "/src/WorkUs"

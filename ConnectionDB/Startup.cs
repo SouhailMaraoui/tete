@@ -26,20 +26,21 @@ namespace ConnectionDB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MyDbContext>(options => options.UseMySQL(Configuration.GetConnectionString("localDB")));
+            services.AddDbContext<MyDbContext>(options => options.UseMySQL(Environment.GetEnvironmentVariable("DATABASE_PROPS")));
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,MyDbContext db)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            db.Database.EnsureCreated();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
