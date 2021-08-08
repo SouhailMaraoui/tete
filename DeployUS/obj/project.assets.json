@@ -151,34 +151,32 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\smaraoui\\.nuget\\packages\\": {}
+    "/home/smaraoui/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\MyCloud\\Users\\Souhail\\S\\Sherbooke\\S21\\IGL601\\TP3\\eq30\\DeployUS\\DeployUS.csproj",
+      "projectUniqueName": "/home/smaraoui/Souhail/S/IGL601/eq30/DeployUS/DeployUS.csproj",
       "projectName": "DeployUS",
-      "projectPath": "D:\\MyCloud\\Users\\Souhail\\S\\Sherbooke\\S21\\IGL601\\TP3\\eq30\\DeployUS\\DeployUS.csproj",
-      "packagesPath": "C:\\Users\\smaraoui\\.nuget\\packages\\",
-      "outputPath": "D:\\MyCloud\\Users\\Souhail\\S\\Sherbooke\\S21\\IGL601\\TP3\\eq30\\DeployUS\\obj\\",
+      "projectPath": "/home/smaraoui/Souhail/S/IGL601/eq30/DeployUS/DeployUS.csproj",
+      "packagesPath": "/home/smaraoui/.nuget/packages/",
+      "outputPath": "/home/smaraoui/Souhail/S/IGL601/eq30/DeployUS/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\smaraoui\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/smaraoui/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "D:\\MyCloud\\Users\\Souhail\\S\\Sherbooke\\S21\\IGL601\\TP3\\eq30\\DataContract\\DataContract.csproj": {
-              "projectPath": "D:\\MyCloud\\Users\\Souhail\\S\\Sherbooke\\S21\\IGL601\\TP3\\eq30\\DataContract\\DataContract.csproj"
+            "/home/smaraoui/Souhail/S/IGL601/eq30/DataContract/DataContract.csproj": {
+              "projectPath": "/home/smaraoui/Souhail/S/IGL601/eq30/DataContract/DataContract.csproj"
             }
           }
         }
@@ -212,6 +210,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[5.0.0, 5.0.0]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -220,7 +224,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.205/RuntimeIdentifierGraph.json"
       }
     }
   }

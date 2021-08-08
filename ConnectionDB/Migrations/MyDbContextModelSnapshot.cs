@@ -16,7 +16,7 @@ namespace ConnectionDB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.8");
 
-            modelBuilder.Entity("ConnectionDB.Data.Script", b =>
+            modelBuilder.Entity("Script", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -30,7 +30,7 @@ namespace ConnectionDB.Migrations
                     b.ToTable("Scripts");
                 });
 
-            modelBuilder.Entity("ConnectionDB.Data.Worker", b =>
+            modelBuilder.Entity("Worker", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()

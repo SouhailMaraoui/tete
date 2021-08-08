@@ -16,7 +16,7 @@ namespace DeployUS.Controllers
     public class InterfaceController : ControllerBase
     {
         const int nullId = -1;
-        const string serverAddr = "http://localhost:10724/";
+        const string serverAddr = "http://localhost:5000/";
 
         [HttpGet("{service}")]
         [HttpGet("{service}/{id}")]

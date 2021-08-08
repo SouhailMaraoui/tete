@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConnectionDB.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20210725200829_initial")]
-    partial class initial
+    [Migration("20210808044301_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,7 +18,7 @@ namespace ConnectionDB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.8");
 
-            modelBuilder.Entity("ConnectionDB.Data.Script", b =>
+            modelBuilder.Entity("Script", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -32,7 +32,7 @@ namespace ConnectionDB.Migrations
                     b.ToTable("Scripts");
                 });
 
-            modelBuilder.Entity("ConnectionDB.Data.Worker", b =>
+            modelBuilder.Entity("Worker", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()

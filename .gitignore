@@ -1,5 +1,11 @@
 .vs
+.vscode
 
-DataContract/obj/Debug
-ConnectionDB/obj/Debug
-DeployUS/obj/Debug
+DataContract/obj/
+DataContract/bin/
+ConnectionDB/obj/
+ConnectionDB/bin/
+DeployUS/obj/
+DeployUS/bin/
+
+
