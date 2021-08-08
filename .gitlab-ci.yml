@@ -1,0 +1,19 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages: 
+  - build-push
+
+connectiondb:
+  stage: build-push
+  before_script:
+    - docker login -u "$DOCKER_HUB_MARS3319_USERNAME" -p "$DOCKER_HUB_MARS3319_PASSWORD"
+  script:
+    - docker build -f ConnectionDB/Dockerfile -t smaraoui2/ConnectionDB .
+    - docker build -f DeployUS/Dockerfile -t smaraoui2/DeployUS .
+    - docker build -f WorkUs/Dockerfile -t smaraoui2/WorkUs .
+    - docker push smaraoui2/ConnectionDB
+    - docker push smaraoui2/DeployUS
+    - docker push smaraoui2/WorkUs
