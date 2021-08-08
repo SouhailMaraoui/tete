@@ -6,7 +6,7 @@ services:
 stages: 
   - build-push
 
-connectiondb:
+build-push:
   stage: build-push
   before_script:
     - docker login -u "$DOCKER_HUB_MARS3319_USERNAME" -p "$DOCKER_HUB_MARS3319_PASSWORD"
