@@ -13,16 +13,17 @@ namespace DeployUS.Controllers
 {
     [Route("exec")]
     [ApiController]
-    public class InterfaceController : ControllerBase
+    public class ExecController : ControllerBase
     {
 
         [HttpPost]
-        public string Run(Worker worker, Script script)
+        public HttpResponseMessage Run(Runner runner)
         {
+
             using (var client = new HttpClient())
             {
-                var toSend = new StringContent(JsonConvert.SerializeObject(script), Encoding.UTF8, "application/json");
-                return client.PostAsync(worker.address + "exec", toSend).Result;
+                var toSend = new StringContent(JsonConvert.SerializeObject(runner.script), Encoding.UTF8, "application/json");
+                return client.PostAsync(runner.worker.address + "exec", toSend).Result;
             }
         }
     }
