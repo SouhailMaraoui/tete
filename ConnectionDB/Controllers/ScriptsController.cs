@@ -37,7 +37,7 @@ namespace ConnectionDB.Controllers
 
             return script;
         }
-       
+
         [HttpPost]
         public async Task<ActionResult<Script>> PostScript(Script script)
         {
