@@ -13,16 +13,16 @@ const scriptObj=new ScriptController();
 const runnerObj=new RunnerController();
 
 export default function Dashboard() {
-    const [loading,setLoading]=useState(true);
+    const [workers,setWorkers] = useState(null)
+    const [scripts,setScripts] = useState(null)
     const [activeLink,setActiveLink]=useState(0);
 
     useEffect(()=>{
-        workerObj.elems.then(workers=>{
-            workerObj.elems=workers;
-            setLoading(false);
+        workerObj.getAll().then(workers=>{
+            setWorkers(workers);
         })
-        scriptObj.elems.then(scripts=>{
-            scriptObj.elems=scripts;
+        scriptObj.getAll().then(scripts=>{
+            setScripts(scripts)
         })
     },[])
 
@@ -48,6 +48,7 @@ export default function Dashboard() {
             id="guideCollapsibleNavAllExampleNav"
             isOpen={true}
             isDocked={true}
+            onClose={()=>{}}
             size={225}>
             <EuiCollapsibleNavGroup
                 background={"light"}
@@ -70,18 +71,19 @@ export default function Dashboard() {
     return (
         <div>
             {sideNav}
-            <EuiPageTemplate paddingSize={"none"} restrictWidth={false} style={{paddingTop:59, height:"100vh"}}
+            <EuiPageTemplate paddingSize={"none"} restrictWidth={false} style={{paddingTop:5, height:"100vh"}}
                 pageHeader={{
                     iconType: navLinks[activeLink].iconType,
                     pageTitle: navLinks[activeLink].label,
                 }}>
                 <EuiSpacer size={"l"}/>
                 <EuiHorizontalRule margin={"none"} className={"mt-n4"}/>
-                {loading
-                    ? <div>Loading</div>
-                    : [activeLink===0 && <Table obj={workerObj} type={"worker"}/>,
-                        activeLink===1 && <Table obj={scriptObj} type={"script"} workerObj={workerObj}/>]
-                }
+                {activeLink===0 && (workers
+                    ? <Table obj={workerObj} elems={workers} setElems={setWorkers} type={"worker"}/>
+                    : <h3>Loading....</h3>)}
+                {activeLink===1 && (scripts
+                    ? <Table obj={scriptObj} elems={scripts} setElems={setScripts} type={"script"} workers={workers}/>
+                    : <h3>Loading....</h3>)}
             </EuiPageTemplate>
         </div>
     )

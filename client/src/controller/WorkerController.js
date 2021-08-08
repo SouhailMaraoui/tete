@@ -3,7 +3,10 @@ import WorkerInterface from "../interface/WorkerInterface";
 export class WorkerController{
     constructor() {
         this.interface=new WorkerInterface();
-        this.elems=this.interface.getAll();
+    }
+
+    getAll(){
+        return this.interface.getAll();
     }
 
     add(worker){

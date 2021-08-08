@@ -16,8 +16,10 @@ import {
     EuiCodeEditor,
 } from '@elastic/eui';
 
-export const Modal = ({obj,type,setAdd}) =>{
+export const Modal = ({obj,type,setAdd,setElems}) =>{
 
+
+    const [isLoading,setLoading]=useState(false);
 
     const getNewElm = () =>{
         if(type==="worker")
@@ -30,9 +32,16 @@ export const Modal = ({obj,type,setAdd}) =>{
 
 
     const addElm = () =>{
-        obj.add(newElm);
-        setAdd(false)
-        setNewElm(getNewElm())
+        setLoading(true);
+        obj.add(newElm).then(()=>{
+            obj.getAll().then(elms=> {
+                setElems(elms)
+
+                setLoading(false);
+                setAdd(false);
+                setNewElm(getNewElm());
+            })
+        })
     }
 
     const formSample = (
@@ -69,7 +78,7 @@ export const Modal = ({obj,type,setAdd}) =>{
             <EuiModalFooter>
                 <EuiButtonEmpty onClick={()=>setAdd(false)}>Cancel</EuiButtonEmpty>
 
-                <EuiButton type="submit" form="modalFormId" onClick={addElm} fill>
+                <EuiButton form="modalFormId" onClick={addElm} fill isLoading={isLoading}>
                     Save
                 </EuiButton>
             </EuiModalFooter>

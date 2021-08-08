@@ -15,9 +15,9 @@ import {
     EuiModalHeaderTitle
 } from '@elastic/eui';
 
-export const RunModal = ({script,workerObj,runnerObj,setRun}) =>{
+export const RunModal = ({script,workers,runnerObj,setRun}) =>{
 
-    const options=workerObj.elems.map(elm=>({
+    const options=workers.map(elm=>({
         value:JSON.stringify(elm),
         text:elm.name
     }))
@@ -35,7 +35,7 @@ export const RunModal = ({script,workerObj,runnerObj,setRun}) =>{
                     id="workerSelect"
                     options={options}
                     value={worker}
-                    onChange={(e) => setWorker(e)}
+                    onChange={(e) => setWorker(e.target.value)}
                 />
             </EuiFormRow>
 
@@ -43,7 +43,7 @@ export const RunModal = ({script,workerObj,runnerObj,setRun}) =>{
     );
 
     return(
-        <EuiModal onClose={()=>setAdd(false)} initialFocus="[name=popswitch]">
+        <EuiModal onClose={()=>setRun(null)} initialFocus="[name=popswitch]">
             <EuiModalHeader>
                 <EuiModalHeaderTitle>
                     <h1>Run script</h1>
@@ -55,8 +55,8 @@ export const RunModal = ({script,workerObj,runnerObj,setRun}) =>{
             <EuiModalFooter>
                 <EuiButtonEmpty onClick={()=>setRun(null)}>Cancel</EuiButtonEmpty>
 
-                <EuiButton type="submit" form="modalFormId" onClick={runScript} fill>
-                    Save
+                <EuiButton form="RunModalFormId" onClick={runScript} fill>
+                    Run
                 </EuiButton>
             </EuiModalFooter>
         </EuiModal>
