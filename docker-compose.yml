@@ -12,7 +12,7 @@ services:
       - 3306:3306
 
   connectiondb:  
-    image: smaraoui2/ConnectionDB
+    image: smaraoui2/connectiondb
     depends_on:
       - database
     environment:
@@ -21,7 +21,7 @@ services:
       - 5000:80
 
   deployus:
-    image: smaraoui2/DeployUS
+    image: smaraoui2/deployus
     depends_on:
       - connectiondb
     environment:
