@@ -1,0 +1,9 @@
+version: '3'  
+  
+services:  
+  watchus:
+    image: odaz/watchus
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 5005:80

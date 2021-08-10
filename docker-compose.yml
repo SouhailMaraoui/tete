@@ -12,7 +12,9 @@ services:
       - 3306:3306
 
   connectiondb:  
-    image: smaraoui2/connectiondb
+    build: 
+        context: .
+        dockerfile: ./ConnectionDB/Dockerfile
     depends_on:
       - database
     environment:
@@ -21,7 +23,9 @@ services:
       - 5000:80
 
   deployus:
-    image: smaraoui2/deployus
+    build: 
+        context: .
+        dockerfile: ./DeployUS/Dockerfile
     depends_on:
       - connectiondb
     environment:
@@ -30,7 +34,9 @@ services:
       - 5001:80
 
   client:
-    image: smaraoui2/client
+    build: 
+        context: .
+        dockerfile: ./client/Dockerfile
     depends_on:
       - deployus
     environment:
@@ -38,3 +44,15 @@ services:
     ports:
       - 80:3000
 
+  test:
+    build: 
+        context: .
+        dockerfile: ./TestUs/Dockerfile
+    depends_on:
+      - database
+      - connectiondb  
+      - deployus
+    environment:
+      CONNECTIONDB_ADDR: http://connectiondb/
+
+  
