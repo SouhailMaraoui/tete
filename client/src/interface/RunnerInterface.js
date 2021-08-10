@@ -9,6 +9,7 @@ export default class RunnerInterface {
             script:script
         }
         return axios.post(RESTProps.URL + RESTProps.EXEC,content).then(response=>{
+            console.log(response.data)
             return response.data;
         })
     }
