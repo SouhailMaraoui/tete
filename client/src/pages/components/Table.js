@@ -58,7 +58,7 @@ export const Table = ({obj,elems,setElems,type,runnerObj,workers}) => {
         icon: 'push',
         type: 'icon',
         color: 'primary',
-        onClick: (e)=>{setRunScript(e)},
+        onClick: (e)=>{setRunScript({id:e.id,script:e.field,name:e.name})},
     })
 
     const removeElm = (elmId) =>{

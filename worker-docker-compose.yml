@@ -4,5 +4,5 @@ services:
   workus:  
     image: smaraoui2/workus
     ports:
-      - 80:80
+      - 5003:80
   

@@ -5,10 +5,10 @@ export default class RunnerInterface {
 
     run(worker,script){
         const content={
-            worker:worker,
+            worker:JSON.parse(worker),
             script:script
         }
-        return axios.post(RESTProps.URL + "/role/create",content).then(response=>{
+        return axios.post(RESTProps.URL + RESTProps.EXEC,content).then(response=>{
             return response.data;
         })
     }

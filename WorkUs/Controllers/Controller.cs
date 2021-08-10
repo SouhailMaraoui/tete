@@ -21,11 +21,14 @@ namespace WorkUs.Controllers
         [HttpPost]
         public Object Run(Script script)
         {
+            System.Console.WriteLine("RUNNING ==================");
+            System.Console.WriteLine(script.script);
+            System.Console.WriteLine("END ======================\n");
             var scriptText = script.script.Replace("\"", "\\\"");
 
             System.IO.File.WriteAllText("docker-compose.yml", scriptText);
 
-            var cmd="docker-compose up --force-recreate -d"; 
+            var cmd="docker-compose up --force-recreate --remove-orphans -d"; 
 
             ProcessStartInfo startInfo = new ProcessStartInfo() { 
                 FileName = "/bin/bash",
@@ -37,7 +40,7 @@ namespace WorkUs.Controllers
             Process proc = new Process() { StartInfo = startInfo, };
             proc.Start();
 
-            while(!proc.WaitForExit(1000));
+            while(!proc.WaitForExit(5000));
 
             StreamReader reader = proc.StandardError;
             var ret=new Dictionary<string, string>();

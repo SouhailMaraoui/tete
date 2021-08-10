@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,17 +18,23 @@ namespace DeployUS.Controllers
     {
 
         [HttpPost]
-        public async Task<string> Run(Runner runner)
+        public Object Run(Runner runner)
         {
-
             using (var client = new HttpClient())
             {
-                var toSend = new StringContent(JsonConvert.SerializeObject(runner.script), Encoding.UTF8, "application/json");
+                try
+                {
+                    var toSend = new StringContent(JsonConvert.SerializeObject(runner.script), Encoding.UTF8, "application/json");
 
-                var response = client.PostAsync(runner.worker.address + "exec", toSend).Result;
-                var contents = response.Content.ReadAsStringAsync().Result;
+                    var response = client.PostAsync("http://"+runner.worker.address + ":5003/exec", toSend).Result;
+                    var contents = response.Content.ReadAsStringAsync().Result;
 
-                return contents;
+                    return contents;
+                }
+                catch(AggregateException)
+                {
+                    return new HttpResponseMessage(HttpStatusCode.BadGateway); ;
+                }
             }
         }
     }

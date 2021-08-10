@@ -1,1 +1,6 @@
-version
+version: '3'
+services: 
+  db:
+    image: httpd
+    ports:
+      - 4242:80
