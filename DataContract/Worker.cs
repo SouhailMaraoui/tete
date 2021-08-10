@@ -9,4 +9,10 @@ public class Worker
     public string name { get; set; }
     public string address { get; set; }
 
+    public Worker(string n, string a)
+    {
+        name=n;
+        address=a;
+    }
+
 }

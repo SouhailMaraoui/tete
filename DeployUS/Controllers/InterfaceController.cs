@@ -13,7 +13,7 @@ namespace DeployUS.Controllers
     public class InterfaceController : ControllerBase
     {
         const int nullId = -1;
-        string serverAddr = Environment.GetEnvironmentVariable("CONNECTIONDB_ADDR");
+        public string serverAddr = Environment.GetEnvironmentVariable("CONNECTIONDB_ADDR");
 
         [HttpGet("{service}")]
         [HttpGet("{service}/{id}")]
