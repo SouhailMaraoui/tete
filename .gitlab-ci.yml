@@ -1,7 +1,7 @@
 image: docker:latest
 
-services:
-  - docker:dind
+include:
+  - template: Code-Quality.gitlab-ci.yml
 
 stages: 
   - analyse
@@ -9,11 +9,10 @@ stages:
   - test
   - watchus
 
-include:
-  - template: Code-Quality.gitlab-ci.yml
-
-
-code-quality:
+services:
+  - docker:dind
+  
+code_quality:
   stage: analyse
   artifacts:
     paths: [code-quality.json]
