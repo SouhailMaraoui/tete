@@ -15,7 +15,7 @@ services:
 code_quality:
   stage: analyse
   artifacts:
-    paths: [code-quality.json]
+    paths: [gl-code-quality-report.json]
 
 build:
   stage: build
