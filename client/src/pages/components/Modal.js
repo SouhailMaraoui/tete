@@ -13,13 +13,14 @@ import {
     EuiModalFooter,
     EuiModalHeader,
     EuiModalHeaderTitle,
-    EuiCodeEditor,
+    EuiCodeEditor, EuiTextColor,
 } from '@elastic/eui';
 
 export const Modal = ({obj,type,setAdd,setElems}) =>{
 
 
     const [isLoading,setLoading]=useState(false);
+    const [userMessage,setUserMessage]=useState("")
 
     const getNewElm = () =>{
         if(type==="worker")
@@ -33,14 +34,21 @@ export const Modal = ({obj,type,setAdd,setElems}) =>{
 
     const addElm = () =>{
         setLoading(true);
-        obj.add(newElm).then(()=>{
-            obj.getAll().then(elms=> {
-                setElems(elms)
+        obj.add(newElm).then((response)=>{
+            if(response.isSuccessStatusCode){
+                obj.getAll().then(elms=> {
+                    setElems(elms)
 
+                    setLoading(false);
+                    setAdd(false);
+                    setNewElm(getNewElm());
+                })
+            }
+            else{
+                setUserMessage(response.reasonPhrase + ", please use the following IP format: x.x.x.x")
                 setLoading(false);
-                setAdd(false);
-                setNewElm(getNewElm());
-            })
+            }
+
         })
     }
 
@@ -53,7 +61,10 @@ export const Modal = ({obj,type,setAdd,setElems}) =>{
 
             {type==="worker" &&
             <EuiFormRow label="Address">
-                <EuiFieldText value={newElm.address} onChange={(e)=>setNewElm({...newElm,address:e.target.value})}/>
+                <div>
+                    <EuiFieldText value={newElm.address} onChange={(e)=>setNewElm({...newElm,address:e.target.value})}/>
+                    <EuiTextColor color="danger">{userMessage}</EuiTextColor>
+                </div>
             </EuiFormRow>}
 
             {type==="script" &&
