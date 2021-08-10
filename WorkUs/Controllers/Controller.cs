@@ -26,9 +26,12 @@ namespace WorkUs.Controllers
             System.Console.WriteLine("END ======================\n");
             var scriptText = script.script.Replace("\"", "\\\"");
 
-            System.IO.File.WriteAllText("docker-compose.yml", scriptText);
+            var folderName=script.name+"_"+script.id.ToString();
 
-            var cmd="docker-compose up --force-recreate --remove-orphans -d"; 
+            System.IO.Directory.CreateDirectory(folderName);
+            System.IO.File.WriteAllText(folderName+"/docker-compose.yml", scriptText);
+
+            var cmd=$"docker-compose up -f {folderName}/docker-compose.yml --force-recreate --remove-orphans -d"; 
 
             ProcessStartInfo startInfo = new ProcessStartInfo() { 
                 FileName = "/bin/bash",

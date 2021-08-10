@@ -79,7 +79,7 @@ export const RunModal = ({script,workers,runnerObj,setRun}) =>{
                 </EuiModalHeaderTitle>
             </EuiModalHeader>
 
-            <EuiModalBody style={{height:100}}>
+            <EuiModalBody style={{height:125}}>
                 {!isLoading
                     ? formSample
                     : running
